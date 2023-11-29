@@ -1,0 +1,345 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creates the resources for the push service on fargate.
+Parameters:
+  ApplicationName:
+    Type: String
+    Description: Name of the application
+    Default: alex-datatrack
+  ECRRepositoryName:
+    Type: String
+    Description: Name for the repository where the docker images wil be stored.
+    Default: alex-datatrack
+  BitbucketCodeStarConnectionArn:
+    Type: String
+    Description: Connection arn to github
+    Default: arn:aws:codestar-connections:eu-west-1:167698347898:connection/3fa67c01-55d8-4af9-96bc-e9de8b001f65
+  GithubRepositoryFullName:
+    Type: String
+    Description: Full name of the github repository.
+    Default: AlexRosier/datatrack-exercise
+  BranchName:
+    Type: String
+    Description: Name of the default branch on which to listen for updates.
+    Default: develop
+  CodeBuildProjectName:
+    Type: String
+    Description: Name of the CodeBuild project.
+    Default: datatrack-alex
+  CodePipelineName:
+    Type: String
+    Description: Name for the CodePipeline.
+    Default: datatrack-alex
+  CodePipelineS3ArtifactStore:
+    Type: String
+    Description: S3 bucket to store CodePipeline artifacts
+    Default: alex-axxes-bucket-bucket-2vpikpgetlaa
+  ECRImageLifeCycle:
+    Type: Number
+    Description: Number of days that the docker image will be kept on ECR since it was pushed.
+    Default: 120
+Resources:
+  #Create an ECR repository to store the docker images.
+  #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecr-repository.html
+  #ECRRepositoryUri: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepositoryName}
+  ECRRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      LifecyclePolicy:
+        LifecyclePolicyText: !Sub '{
+            "rules": [
+                {
+                    "rulePriority": 1,
+                    "description": "Expire images older than ${ECRImageLifeCycle} days",
+                    "selection": {
+                        "tagStatus": "any",
+                        "countType": "sinceImagePushed",
+                        "countUnit": "days",
+                        "countNumber": ${ECRImageLifeCycle}
+                    },
+                    "action": {
+                        "type": "expire"
+                    }
+                }
+            ]
+          }'
+      RepositoryName: !Ref ECRRepositoryName
+      Tags:
+        - Key: "Application"
+          Value: !Ref ApplicationName
+        - Key: "Stage"
+          Value: "prod"
+      RepositoryPolicyText:
+        Version: '2008-10-17'
+        Statement:
+          - Sid: AllowPushPull
+            Effect: Allow
+            Principal:
+              AWS: "*"
+            Condition:
+              ArnLike:
+                aws:SourceArn: !Sub arn:aws:iam:${AWS::AccountId}:user/*
+            Action:
+              - ecr:GetDownloadUrlForLayer
+              - ecr:BatchGetImage
+              - ecr:BatchCheckLayerAvailability
+              - ecr:PutImage
+              - ecr:InitiateLayerUpload
+              - ecr:UploadLayerPart
+              - ecr:CompleteLayerUpload
+
+  #Create a CodeBuild project
+  #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    DependsOn:
+      - ECRRepository
+      - CodeBuildServiceRole
+    Properties:
+      Name: !Ref CodeBuildProjectName
+      ServiceRole: !Ref CodeBuildServiceRole
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: "BUILD_GENERAL1_MEDIUM"
+        Image: "aws/codebuild/standard:6.0"
+        Type: "LINUX_CONTAINER"
+        PrivilegedMode: true
+        EnvironmentVariables:
+          - Name: REPOSITORY_BASE_URI
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
+          - Name: REPOSITORY_URI
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepositoryName}
+      Tags:
+        - Key: "Application"
+          Value: !Ref ApplicationName
+        - Key: "Stage"
+          Value: "prod"
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 15
+
+  #Create a CodeBuild project
+  #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+  CodeBuildProjectProdTagging:
+    Type: AWS::CodeBuild::Project
+    DependsOn:
+      - ECRRepository
+      - CodeBuildServiceRole
+    Properties:
+      Name: !Sub "${CodeBuildProjectName}-tagging"
+      ServiceRole: !Ref CodeBuildServiceRole
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: "BUILD_GENERAL1_SMALL"
+        Image: "aws/codebuild/standard:6.0"
+        Type: "LINUX_CONTAINER"
+        PrivilegedMode: true
+      Tags:
+        - Key: "Application"
+          Value: !Ref ApplicationName
+        - Key: "Stage"
+          Value: "prod"
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: "buildspec-tagging.yml"
+      TimeoutInMinutes: 10
+
+  #Create a role in IAM that will be used by CodeBuild
+  #Name: ${ApplicationName}-codeBuildServiceRole
+  CodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join [ "-", [ !Ref ApplicationName, "codeBuildServiceRole" ] ]
+      Tags:
+        - Key: "Application"
+          Value: !Ref ApplicationName
+        - Key: "Stage"
+          Value: "prod"
+      Path: /
+      AssumeRolePolicyDocument: |
+        {
+            "Statement": [{
+                "Effect": "Allow",
+                "Principal": { "Service": [ "codebuild.amazonaws.com" ]},
+                "Action": [ "sts:AssumeRole" ]
+            }]
+        }
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - ecr:GetAuthorizationToken
+                  - ecr:InitiateLayerUpload
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:PutImage
+                  - ecr:InitiateLayerUpload
+                  - ecr:UploadLayerPart
+                  - ecr:CompleteLayerUpload
+                  - ssm:GetParametersByPath
+                  - ssm:GetParameters
+              - Resource: !Sub arn:aws:s3:::${CodePipelineS3ArtifactStore}/*
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:GetObjectVersion
+              - Resource: !Sub arn:aws:s3:::dc-test-results/*
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:GetObjectVersion
+              - Resource: !Sub arn:aws:s3:::dc-java-codebuild/*
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+
+  #Create a new pipeline in CodePipeline
+  #https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-pipeline-structure.html#action-requirements
+  CodePipeline:
+    Type: AWS::CodePipeline::Pipeline
+    DependsOn:
+      - CodeBuildProject
+      - CodePipelineServiceRole
+    Properties:
+      Name: !Ref CodePipelineName
+      RoleArn: !GetAtt CodePipelineServiceRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref CodePipelineS3ArtifactStore
+      Tags:
+        - Key: "Application"
+          Value: !Ref ApplicationName
+        - Key: "Stage"
+          Value: "prod"
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: Source
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Version: 1
+                Provider: CodeStarSourceConnection
+              Configuration:
+                ConnectionArn: !Ref BitbucketCodeStarConnectionArn
+                FullRepositoryId: !Ref GithubRepositoryFullName
+                BranchName: !Ref BranchName
+              OutputArtifacts:
+                - Name: !Join [ "-", [ !Ref ApplicationName, "sourceCode" ] ]
+              RunOrder: 1
+        - Name: Build
+          Actions:
+            - Name: Build
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration:
+                ProjectName: !Ref CodeBuildProject
+              InputArtifacts:
+                - Name: !Join [ "-", [ !Ref ApplicationName, "sourceCode" ] ]
+              OutputArtifacts:
+                - Name: !Join [ "-", [ !Ref ApplicationName, "buildResult" ] ]
+              RunOrder: 1
+        - Name: ManualApproval
+          Actions:
+            - Name: ManualApproval
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Version: 1
+                Provider: Manual
+              RunOrder: 1
+        - Name: TagEcrProdImage
+          Actions:
+            - Name: TagEcrProdImage
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration:
+                ProjectName: !Ref CodeBuildProjectProdTagging
+              InputArtifacts:
+                - Name: !Join [ "-", [ !Ref ApplicationName, "sourceCode" ] ]
+              OutputArtifacts:
+                - Name: !Join [ "-", [ !Ref ApplicationName, "taggingResult" ] ]
+              RunOrder: 1
+
+  #Create a role in IAM that will be used by CodePipeline
+  #Name: ${ApplicationName}-codeBuildServiceRole
+  CodePipelineServiceRole:
+    Type: AWS::IAM::Role
+    Description: Creates service role in IAM for AWS CodePipeline
+    Properties:
+      RoleName: !Join [ "-", [ !Ref ApplicationName, "codePipelineServiceRole" ] ]
+      Tags:
+        - Key: "Application"
+          Value: !Ref ApplicationName
+        - Key: "Stage"
+          Value: "prod"
+      Path: /
+      AssumeRolePolicyDocument: |
+        {
+            "Statement": [{
+                "Effect": "Allow",
+                "Principal": { "Service": [ "codepipeline.amazonaws.com" ]},
+                "Action": [ "sts:AssumeRole" ]
+            }]
+        }
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - "s3:*"
+              #          - Resource:
+              #            - !Sub arn:aws:s3:::${CodePipelineS3ArtifactStore}/*
+              #            Effect: Allow
+              #            Action:
+              #            - s3:PutObject
+              #            - s3:GetObject
+              #            - s3:GetObjectVersion
+              #            - s3:GetBucketVersioning
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - ecs:DescribeServices
+                  - ecs:DescribeTaskDefinition
+                  - ecs:DescribeTasks
+                  - ecs:ListTasks
+                  - ecs:RegisterTaskDefinition
+                  - ecs:UpdateService
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                  - iam:PassRole
+                  - codecommit:CancelUploadArchive
+                  - codecommit:GetBranch
+                  - codecommit:GetCommit
+                  - codecommit:GetUploadArchiveStatus
+                  - codecommit:UploadArchive
+                  - ecr:InitiateLayerUpload
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:PutImage
+                  - ecr:InitiateLayerUpload
+                  - ecr:UploadLayerPart
+                  - ecr:CompleteLayerUpload
+                  - codestar-connections:UseConnection

@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - echo $(ifconfig | grep -v 169.254 | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p') $(cat /etc/hostname) >> /etc/hosts
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+  build:
+    commands:
+      - echo Entered the build phase...
+      - docker build -f Dockerfile -t alex-datatrack:test" .
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${REPOSITORY_BASE_URI}
+      - docker tag push-service:${TAG} ${IMAGE_URI_VERSION}
+      - docker tag push-service:${TAG} ${IMAGE_URI_TIMESTAMP}
+      - docker tag push-service:${TAG} ${IMAGE_URI_LATEST}
+      - docker push "$IMAGE_URI_VERSION"
+      - docker push "$IMAGE_URI_TIMESTAMP"
+      - docker push "$IMAGE_URI_LATEST"
+      - printf '[{"name":"%s-test","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI_VERSION" > imageTest.json
+      - printf '[{"name":"%s-prod","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI_VERSION" > imageProd.json
+artifacts:
+  files:
+    - imageTest.json
+    - imageProd.json

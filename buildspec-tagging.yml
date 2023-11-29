@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION
+  build:
+    commands:
+      - aws configure set cli_timestamp_format iso8601
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - echo ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - TIMESTAMP_TAG="$(date -d @$((${CODEBUILD_START_TIME}/1000)) +'%Y-%m-%dT%HH%M')" #milis -> secs; Tag: [a-zA-Z0-9-_.]+
+      - echo "${TIMESTAMP_TAG}"
+      - MANIFEST=$(aws ecr batch-get-image --repository-name push-service --image-ids imageTag=${CODEBUILD_RESOLVED_SOURCE_VERSION} --output json | jq --raw-output --join-output '.images[0].imageManifest')
+      - aws ecr put-image --repository-name push-service --image-tag prod --image-manifest "$MANIFEST"
+      - aws ecr put-image --repository-name push-service --image-tag prod-${TIMESTAMP_TAG} --image-manifest "$MANIFEST"
