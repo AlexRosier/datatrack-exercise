@@ -10,13 +10,10 @@ phases:
       - echo Entered the pre_build phase...
       - TIMESTAMP_TAG="$(date -d @$((${CODEBUILD_START_TIME}/1000)) +'%Y-%m-%dT%HH%M')" #milis -> secs; Tag: [a-zA-Z0-9-_.]+
       - TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION}"
-      - IMAGE_URI_VERSION="${REPOSITORY_URI}:${TAG}"
-      - IMAGE_URI_TIMESTAMP="${REPOSITORY_URI}:test-${TIMESTAMP_TAG}"
-      - IMAGE_URI_LATEST="${REPOSITORY_URI}:test"
   build:
     commands:
       - echo Entered the build phase...
-      - docker build -f Dockerfile -t alex-datatrack:${TAG}" .
+      - docker build -f Dockerfile -t alex-datatrack:${TAG} .
 
   post_build:
     commands:
