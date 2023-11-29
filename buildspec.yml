@@ -8,6 +8,7 @@ phases:
   pre_build:
     commands:
       - echo Entered the pre_build phase...
+      - TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION}"
   build:
     commands:
       - echo Entered the build phase...
@@ -22,9 +23,3 @@ phases:
       - docker push "$IMAGE_URI_VERSION"
       - docker push "$IMAGE_URI_TIMESTAMP"
       - docker push "$IMAGE_URI_LATEST"
-      - printf '[{"name":"%s-test","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI_VERSION" > imageTest.json
-      - printf '[{"name":"%s-prod","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI_VERSION" > imageProd.json
-artifacts:
-  files:
-    - imageTest.json
-    - imageProd.json
