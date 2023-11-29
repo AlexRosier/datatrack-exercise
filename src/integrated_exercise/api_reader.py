@@ -17,7 +17,7 @@ def get_timeseries() -> list:
     return __get_json(timeseries_url)
 
 
-def get_time_series_data(date_to_tech: str, timeseries: list) -> list:
+def get_time_series_data(date_to_tech: str, timeseries: list) -> dict:
     timeseries_ids = list(map(lambda timeserie: timeserie['id'], timeseries))
     timespan = __get_timespan(date_to_tech)
 

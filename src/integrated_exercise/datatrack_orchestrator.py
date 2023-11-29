@@ -5,6 +5,7 @@ import s3_writer
 import station_smasher
 import timeseries_smasher
 import timeseries_data_smasher
+import os
 
 
 def handle_categories(write_configuration: s3_writer.WriteConfiguration):
@@ -31,17 +32,13 @@ def handle_timeseries_data(write_configuration: s3_writer.WriteConfiguration, ti
     s3_writer.timeseries_data_to_s3(write_configuration, smashed_timeseries_data)
 
 
-def main(bucket: str, date: str):
-    print(datetime.now())
-    write_configuration = s3_writer.WriteConfiguration(bucket, date)
+def main():
+    write_configuration = s3_writer.WriteConfiguration(os.getenv("bucket"), os.getenv("date"))
 
     handle_categories(write_configuration)
     handle_stations(write_configuration)
     handle_timeseries(write_configuration)
     handle_timeseries_data(write_configuration, api_reader.get_timeseries())
 
-    print(datetime.now())
-
-
-main("data-track-integrated-exercise", "25-11-2023")
+# main("data-track-integrated-exercise", "25-11-2023")
 # main("alex-axxes-bucket-bucket-2vpikpgetlaa", "25-11-2023")
