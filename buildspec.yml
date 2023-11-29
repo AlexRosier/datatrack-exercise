@@ -17,14 +17,9 @@ phases:
     commands:
       - echo Entered the build phase...
       - docker build -f Dockerfile -t alex-datatrack:${TAG}" .
-      - docker push alex-datatrack:${TAG}
+
   post_build:
     commands:
       - echo Entered the post_build phase...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${REPOSITORY_BASE_URI}
-      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_VERSION}
-      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_TIMESTAMP}
-      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_LATEST}
-      - docker push "$IMAGE_URI_VERSION"
-      - docker push "$IMAGE_URI_TIMESTAMP"
-      - docker push "$IMAGE_URI_LATEST"
+      - docker push alex-datatrack:${TAG}
