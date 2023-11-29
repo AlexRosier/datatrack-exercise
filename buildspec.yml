@@ -23,9 +23,9 @@ phases:
   post_build:
     commands:
       - echo Entered the post_build phase...
-#      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_VERSION}
-#      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_TIMESTAMP}
-#      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_LATEST}
+      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_VERSION}
+      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_TIMESTAMP}
+      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_LATEST}
       - docker push "$IMAGE_URI_VERSION"
       - docker push "$IMAGE_URI_TIMESTAMP"
       - docker push "$IMAGE_URI_LATEST"
