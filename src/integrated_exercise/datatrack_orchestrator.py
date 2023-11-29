@@ -39,6 +39,3 @@ def main():
     handle_stations(write_configuration)
     handle_timeseries(write_configuration)
     handle_timeseries_data(write_configuration, api_reader.get_timeseries())
-
-# main("data-track-integrated-exercise", "25-11-2023")
-# main("alex-axxes-bucket-bucket-2vpikpgetlaa", "25-11-2023")
