@@ -10,13 +10,22 @@ phases:
       - echo Entered the pre_build phase...
       - TIMESTAMP_TAG="$(date -d @$((${CODEBUILD_START_TIME}/1000)) +'%Y-%m-%dT%HH%M')" #milis -> secs; Tag: [a-zA-Z0-9-_.]+
       - TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION}"
+      - IMAGE_URI_VERSION="${REPOSITORY_URI}:${TAG}"
+      - IMAGE_URI_LATEST="${REPOSITORY_URI}:test"
+      - IMAGE_URI_TIMESTAMP="${REPOSITORY_URI}:test-${TIMESTAMP_TAG}"
   build:
     commands:
       - echo Entered the build phase...
+      - docker login -u datatrackalex -p ${DOCKER_AUTH_PASSWORD}
       - docker build -f Dockerfile -t alex-datatrack:${TAG} .
 
   post_build:
     commands:
       - echo Entered the post_build phase...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${REPOSITORY_BASE_URI}
-      - docker push alex-datatrack:${TAG}
+      - docker tag push-service:${TAG} ${IMAGE_URI_VERSION}
+      - docker tag push-service:${TAG} ${IMAGE_URI_TIMESTAMP}
+      - docker tag push-service:${TAG} ${IMAGE_URI_LATEST}
+      - docker push "$IMAGE_URI_VERSION"
+      - docker push "$IMAGE_URI_TIMESTAMP"
+      - docker push "$IMAGE_URI_LATEST"
