@@ -11,6 +11,7 @@ phases:
       - TIMESTAMP_TAG="$(date -d @$((${CODEBUILD_START_TIME}/1000)) +'%Y-%m-%dT%HH%M')" #milis -> secs; Tag: [a-zA-Z0-9-_.]+
       - TAG="${CODEBUILD_RESOLVED_SOURCE_VERSION}"
       - IMAGE_URI_VERSION="${REPOSITORY_URI}:${TAG}"
+      - echo ${IMAGE_URI_VERSION}
       - IMAGE_URI_LATEST="${REPOSITORY_URI}:test"
       - IMAGE_URI_TIMESTAMP="${REPOSITORY_URI}:test-${TIMESTAMP_TAG}"
   build:
@@ -22,10 +23,9 @@ phases:
   post_build:
     commands:
       - echo Entered the post_build phase...
-      - docker push alex-datatrack:${TAG}
-      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_VERSION}
-      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_TIMESTAMP}
-      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_LATEST}
+#      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_VERSION}
+#      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_TIMESTAMP}
+#      - docker tag alex-datatrack:${TAG} ${IMAGE_URI_LATEST}
       - docker push "$IMAGE_URI_VERSION"
       - docker push "$IMAGE_URI_TIMESTAMP"
       - docker push "$IMAGE_URI_LATEST"
