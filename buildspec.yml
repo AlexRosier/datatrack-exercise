@@ -17,6 +17,7 @@ phases:
     commands:
       - echo Entered the build phase...
       - docker build -f Dockerfile -t alex-datatrack:${TAG}" .
+      - docker push alex-datatrack:${TAG}
   post_build:
     commands:
       - echo Entered the post_build phase...
