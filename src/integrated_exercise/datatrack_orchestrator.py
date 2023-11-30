@@ -39,7 +39,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Building greeter")
     parser.add_argument(
-        "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
+        "-d", "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
     )
     args = parser.parse_args()
     logging.info(f"Using args: {args}")

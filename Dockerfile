@@ -12,6 +12,3 @@ ADD src/integrated_exercise/s3_writer.py s3_writer.py
 ADD src/integrated_exercise/station_smasher.py station_smasher.py
 ADD src/integrated_exercise/timeseries_smasher.py timeseries_smasher.py
 ADD src/integrated_exercise/timeseries_data_smasher.py timeseries_data_smasher.py
-
-
-ENTRYPOINT ["python", "datatrack_orchestrator.py"]
