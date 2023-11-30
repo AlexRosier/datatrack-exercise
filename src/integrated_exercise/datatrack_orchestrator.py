@@ -49,3 +49,6 @@ def main():
     handle_stations(write_configuration)
     handle_timeseries(write_configuration)
     handle_timeseries_data(write_configuration, api_reader.get_timeseries())
+
+if __name__ == "__main__":
+    main()
