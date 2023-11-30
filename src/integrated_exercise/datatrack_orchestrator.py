@@ -1,3 +1,4 @@
+import sys
 import api_reader
 import s3_writer
 import station_smasher
