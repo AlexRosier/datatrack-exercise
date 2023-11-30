@@ -31,7 +31,7 @@ def get_time_series_data(date_to_tech: str, timeseries: list) -> dict:
 
 
 def __get_timespan(date_to_fetch: str) -> str:
-    date_time = datetime.strptime(date_to_fetch, '%d-%m-%Y')
+    date_time = datetime.strptime(date_to_fetch, '%Y-%m-%d')
     return "PT24H/" + str(date_time.strftime('%Y-%m-%d')) + "TZ"
 
 
