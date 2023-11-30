@@ -1,11 +1,11 @@
-from datetime import datetime
-
 import api_reader
 import s3_writer
 import station_smasher
 import timeseries_smasher
 import timeseries_data_smasher
 import os
+import logging
+import argparse
 
 
 def handle_categories(write_configuration: s3_writer.WriteConfiguration):
@@ -33,7 +33,16 @@ def handle_timeseries_data(write_configuration: s3_writer.WriteConfiguration, ti
 
 
 def main():
-    write_configuration = s3_writer.WriteConfiguration(os.getenv("bucket"), os.getenv("date"))
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
+    parser = argparse.ArgumentParser(description="Building greeter")
+    parser.add_argument(
+        "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
+    )
+    args = parser.parse_args()
+    logging.info(f"Using args: {args}")
+
+    write_configuration = s3_writer.WriteConfiguration(os.getenv("bucket"), args.date)
 
     handle_categories(write_configuration)
     handle_stations(write_configuration)
