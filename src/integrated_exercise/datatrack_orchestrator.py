@@ -34,6 +34,7 @@ def handle_timeseries_data(write_configuration: s3_writer.WriteConfiguration, ti
 
 
 def main():
+    logging.info("Entering main")
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
     parser = argparse.ArgumentParser(description="Building greeter")
