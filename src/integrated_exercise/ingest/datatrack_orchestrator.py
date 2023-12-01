@@ -34,10 +34,10 @@ def handle_timeseries_data(write_configuration: s3_writer.WriteConfiguration, ti
 
 
 def main():
-    logging.info("Entering main")
+    logging.info("Entering ingest main")
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-    parser = argparse.ArgumentParser(description="Building greeter")
+    parser = argparse.ArgumentParser(description="Ingest")
     parser.add_argument(
         "-d", "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
     )
