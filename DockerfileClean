@@ -7,6 +7,7 @@ WORKDIR /opt/spark/work-dir
 
 USER 0
 
+COPY src/integrated_exercise/pyspark/spark_clean.py spark_clean.py
 COPY . .
 
 RUN pip install --no-cache-dir -e .
