@@ -28,10 +28,6 @@ resource "aws_batch_job_definition" "alex-datatrack" {
   })
 }
 
-#resource "aws_ecr_repository" "alex-datatrack-clean" {
-#    name = "alex-datatrack-clean"
-#}
-
 resource "aws_batch_job_definition" "alex-datatrack-clean" {
   name = "alex-datatrack-clean"
   type = "container"

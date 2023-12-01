@@ -19,17 +19,17 @@ spark = SparkSession.builder.config(
 
 
 def read(date: str) -> dict:
-    s3_base_path = os.getenv("bucket") + "/" + str(date)
-    df_categories = spark.read.option("multiline", "true").json("s3a://" + s3_base_path + "/categories")
-    df_stations = spark.read.option("multiline", "true").json("s3a://" + s3_base_path + "/stations")
-    df_timeseries = spark.read.option("multiline", "true").json("s3a://" + s3_base_path + "/timeseries")
-    df_timeseriesdata = spark.read.option("multiline", "true").json("s3a://" + s3_base_path + "/timeseriesdata")
+    bucket = os.getenv("bucket")
+    df_categories = spark.read.option("multiline", "true").json(f"s3a://{bucket}/alex-data/{date}/categories")
+    df_stations = spark.read.option("multiline", "true").json(f"s3a://{bucket}/alex-data/{date}/stations")
+    df_timeseries = spark.read.option("multiline", "true").json(f"s3a://{bucket}/alex-data/{date}/timeseries")
+    df_timeseriesdata = spark.read.option("multiline", "true").json(f"s3a://{bucket}/alex-data/{date}/timeseriesdata")
 
     return {'categories': df_categories, 'stations': df_stations, 'timesseries': df_timeseries,
             'timeseriesdata': df_timeseriesdata}
 
 
-def transform(dataframes: dict, date: str) -> dict:
+def transform_dataframes(dataframes: dict, date: str) -> dict:
     df_categories = transform(dataframes.get("categories"), date)
     df_stations = transform(dataframes.get("stations"), date)
     df_timeseries = transform(dataframes.get("timeseries"), date)
@@ -40,7 +40,7 @@ def transform(dataframes: dict, date: str) -> dict:
 
 
 def transform(dataframe: DataFrame, date: str) -> DataFrame:
-    dataframe.withColumn("ds", psf.lit(date))
+    return dataframe.withColumn("ds", psf.lit(date))
 
 
 def transform_timeseries_data(df_timeseries_data: DataFrame, date: str) -> DataFrame:
@@ -48,6 +48,12 @@ def transform_timeseries_data(df_timeseries_data: DataFrame, date: str) -> DataF
             .withColumn("timeseries_timestamp_normalized", psf.to_utc_timestamp(
         psf.from_unixtime(psf.col("timeseries_data_timestamp") / 1000, 'yyyy-MM-dd HH:mm:ss'), 'CET'))
             .withColumn("ds", psf.lit(date)))
+
+
+def write_dataframes(dataframes: dict, date: str):
+    bucket = os.getenv("bucket")
+    for key, value in dataframes:
+        value.repartition(1).write.parquet(f"s3a://{bucket}/alex-data/clean/{date}/{key}", mode="overwrite")
 
 
 def main():
@@ -61,7 +67,8 @@ def main():
     logging.info(f"Using args: {args}")
 
     dataframes = read(args.date)
-    transform(dataframes, args.date)
+    transformed_dataframes = transform_dataframes(dataframes, args.date)
+    write_dataframes(transformed_dataframes, args.date)
 
 
 if __name__ == "__main__":
