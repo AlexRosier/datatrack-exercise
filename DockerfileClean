@@ -6,7 +6,14 @@ WORKDIR /opt/spark/work-dir
 USER 0
 
 ADD src/integrated_exercise/clean/spark_clean.py spark_clean.py
+ADD src/integrated_exercise/clean/raw_reader.py raw_reader.py
+ADD src/integrated_exercise/clean/categories_transformer.py categories_transformer.py
+ADD src/integrated_exercise/clean/stations_transformer.py stations_transformer.py
+ADD src/integrated_exercise/clean/timeseries_transformer.py timeseries_transformer.py
+ADD src/integrated_exercise/clean/timeseriesdata_transformer.py timeseriesdata_transformer.py
+
 ADD requirementsclean.in requirementsclean.in
+
 RUN pip install -r requirementsclean.in
 COPY . .
 

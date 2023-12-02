@@ -1,11 +1,13 @@
 from pyspark.sql import SparkSession
-from pyspark.sql import DataFrame
-import pyspark.sql.functions as psf
-import os
 import logging
 import argparse
 import sys
 import raw_reader
+
+import categories_transformer
+import stations_transformer
+import timeseries_transformer
+import timeseriesdata_transformer
 
 spark = SparkSession.builder.config(
     "spark.jars.packages",
@@ -25,44 +27,31 @@ timeseries = 'timeseries'
 timeseriesdata = 'timeseriesdata'
 
 
-def read(bucket_read_path: str, date: str) -> dict:
+def read(bucket_path: str, date: str) -> dict:
     bucket = "data-track-integrated-exercise"
 
-    df_categories = raw_reader.read_categories(spark, bucket_read_path, date)
-
-    df_stations = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{stations}")
-    df_timeseries = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{timeseries}")
-    df_timeseriesdata = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{timeseriesdata}")
+    df_categories = raw_reader.read_categories(spark, bucket_path, date)
+    df_stations = raw_reader.read_stations(spark, bucket_path, date)
+    df_timeseries = raw_reader.read_timeseries(spark, bucket_path, date)
+    df_timeseriesdata = raw_reader.read_timeseriesdata(spark, bucket_path, date)
 
     return {categories: df_categories, stations: df_stations, timeseries: df_timeseries,
             timeseriesdata: df_timeseriesdata}
 
 
 def transform_dataframes(dataframes: dict, date: str) -> dict:
-    df_categories = transform(dataframes.get(categories), date)
-    df_stations = transform(dataframes.get(stations), date)
-    df_timeseries = transform(dataframes.get(timeseries), date)
-    df_timeseriesdata = transform_timeseries_data(dataframes.get(timeseriesdata), date)
+    df_categories = categories_transformer.transform(dataframes.get(categories), date)
+    df_stations = stations_transformer.transform(dataframes.get(stations), date)
+    df_timeseries = timeseries_transformer.transform(dataframes.get(timeseries), date)
+    df_timeseriesdata = timeseriesdata_transformer.transform(dataframes.get(timeseriesdata), date)
 
     return {categories: df_categories, stations: df_stations, timeseries: df_timeseries,
             timeseriesdata: df_timeseriesdata}
 
 
-def transform(dataframe: DataFrame, date: str) -> DataFrame:
-    return dataframe.withColumn("ds", psf.lit(date))
-
-
-def transform_timeseries_data(df_timeseries_data: DataFrame, date: str) -> DataFrame:
-    return (df_timeseries_data
-            .withColumn("timeseries_timestamp_normalized", psf.to_utc_timestamp(
-        psf.from_unixtime(psf.col("timeseries_data_timestamp") / 1000, 'yyyy-MM-dd HH:mm:ss'), 'CET'))
-            .withColumn("ds", psf.lit(date)))
-
-
-def write_dataframes(dataframes: dict, date: str):
-    bucket = os.getenv("bucket")
+def write_dataframes(dataframes: dict, bucket_path: str, date: str):
     for key in dataframes.keys():
-        dataframes.get(key).write.parquet(f"s3a://{bucket}/alex-data/source/{date}/{key}", mode="overwrite")
+        dataframes.get(key).write.parquet(f"{bucket_path}/source/{date}/{key}/", mode="overwrite")
 
 
 def main():
@@ -72,12 +61,15 @@ def main():
     parser.add_argument(
         "-d", "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
     )
+    parser.add_argument(
+        "-b", "--bucket_path", dest="bucket_path", help="Path on S3 to the bucket first sub folder", required=True
+    )
     args = parser.parse_args()
     logging.info(f"Using args: {args}")
 
-    dataframes = read(args.date)
+    dataframes = read(args.bucket_path, args.date)
     transformed_dataframes = transform_dataframes(dataframes, args.date)
-    write_dataframes(transformed_dataframes, args.date)
+    write_dataframes(transformed_dataframes, args.bucket_path, args.date)
 
 
 if __name__ == "__main__":
