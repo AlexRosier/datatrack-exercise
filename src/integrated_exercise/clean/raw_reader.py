@@ -10,7 +10,7 @@ from pyspark.sql.types import (
     ArrayType
 )
 
-category_fields = [
+station_fields = [
     StructField("properties", StructType(fields=[
         StructField("id", IntegerType()),
         StructField("label", StringType()),
@@ -27,11 +27,11 @@ category_fields = [
 
 
 def read_categories(spark: SparkSession, bucket_path: str, date: str) -> DataFrame:
-    return spark.read.json(f"{bucket_path}/raw/{date}/categories", schema=StructType(category_fields))
+    return spark.read.json(f"{bucket_path}/raw/{date}/categories")
 
 
 def read_stations(spark: SparkSession, bucket_path: str, date: str) -> DataFrame:
-    return __read_from_s3(spark, f"{bucket_path}/raw/{date}/stations")
+    return __read_from_s3(spark, f"{bucket_path}/raw/{date}/stations", schema=StructType(station_fields))
 
 
 def read_timeseries(spark: SparkSession, bucket_path: str, date: str) -> DataFrame:

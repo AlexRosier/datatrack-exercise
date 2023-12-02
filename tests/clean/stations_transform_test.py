@@ -7,11 +7,11 @@ from pyspark.sql.types import (
     FloatType,
 )
 from tests.comparers import assert_frames_functionally_equivalent
-from src.integrated_exercise.clean.raw_reader import category_fields
+from src.integrated_exercise.clean.raw_reader import station_fields
 from src.integrated_exercise.clean import stations_transformer
 
 spark = SparkSession.builder.master("local[*]").getOrCreate()
-df_stations = spark.read.option("multiline", "true").json("data/stations.json", schema=StructType(category_fields))
+df_stations = spark.read.option("multiline", "true").json("data/stations.json", schema=StructType(station_fields))
 
 
 def test_transform():
