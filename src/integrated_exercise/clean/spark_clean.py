@@ -28,8 +28,6 @@ timeseriesdata = 'timeseriesdata'
 
 
 def read(bucket_path: str, date: str) -> dict:
-    bucket = "data-track-integrated-exercise"
-
     df_categories = raw_reader.read_categories(spark, bucket_path, date)
     df_stations = raw_reader.read_stations(spark, bucket_path, date)
     df_timeseries = raw_reader.read_timeseries(spark, bucket_path, date)
