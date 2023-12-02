@@ -4,6 +4,7 @@ import pyspark.sql.functions as psf
 import os
 import logging
 import argparse
+import sys
 
 spark = SparkSession.builder.config(
     "spark.jars.packages",
