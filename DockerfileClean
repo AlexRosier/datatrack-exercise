@@ -6,6 +6,7 @@ WORKDIR /opt/spark/work-dir
 USER 0
 
 ADD src/integrated_exercise/pyspark/spark_clean.py spark_clean.py
+RUN pip install -r requirementsClean.in --no-cache-dir
 COPY . .
 
 RUN pip install --no-cache-dir -e .
