@@ -1,0 +1,40 @@
+[{
+    "id": "6522",
+    "label": "1,2-XYLENE O-XYLENE 6522 - btx, o-xyleen - procedure, 41B006 - Bruxelles (Parlement UE)",
+    "uom": "5S",
+    "station": {
+        "properties": {
+            "id": 1112,
+            "label": "41B006 - Bruxelles (Parlement UE)"
+        },
+        "geometry": {
+            "coordinates": [
+                4.374388284562104,
+                50.838640177166184,
+                "NaN"
+            ],
+            "type": "Point"
+        },
+        "type": "Feature"
+    }
+},
+{
+    "id": "10892",
+    "label": "Ammonia 10892 - MINI DOAS - procedure, 42BO01 - Bonheiden",
+    "uom": "5S",
+    "station": {
+        "properties": {
+            "id": 1738,
+            "label": "42BO01 - Bonheiden"
+        },
+        "geometry": {
+            "coordinates": [
+                4.516483717002172,
+                51.02706104655742,
+                "NaN"
+            ],
+            "type": "Point"
+        },
+        "type": "Feature"
+    }
+}]

@@ -29,8 +29,6 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
         "station_coordinates_z": psf.col("geometry.coordinates").getItem(2)
     })
 
-    df_renamed.show(10, False)
-
     df_dropped = (df_renamed
                   .withColumn("ds", psf.lit(date))
                   .drop("timeseries")

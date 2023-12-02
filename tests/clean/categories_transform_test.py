@@ -9,7 +9,7 @@ from tests.comparers import assert_frames_functionally_equivalent
 from src.integrated_exercise.clean import categories_transformer
 
 spark = SparkSession.builder.master("local[*]").getOrCreate()
-df_categories = spark.read.json("categories.json")
+df_categories = spark.read.json("data/categories.json")
 
 
 def test_transform():
