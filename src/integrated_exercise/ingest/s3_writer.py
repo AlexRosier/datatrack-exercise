@@ -28,7 +28,7 @@ def stations_to_s3(write_configuration: WriteConfiguration, stations: list):
 
 
 def timeseries_to_s3(write_configuration: WriteConfiguration, timeseries: list):
-    __write_json_to_s3(write_configuration, "timeseries", timeseries)
+    __write_json_to_s3(write_configuration, "timeseries/timeseries", timeseries)
 
 
 def timeseries_data_to_s3(write_configuration: WriteConfiguration, timeseries_data: dict):
@@ -37,7 +37,7 @@ def timeseries_data_to_s3(write_configuration: WriteConfiguration, timeseries_da
         value_this = timeseries_data.get(key)
         timeseries_data_list.append({"timeseriesdata_id": key, "values": value_this['values']})
 
-    __write_json_to_s3(write_configuration, "timeseriesdata", timeseries_data_list)
+    __write_json_to_s3(write_configuration, "timeseriesdata/timeseriesdata", timeseries_data_list)
 
 
 def __write_json_to_s3(write_configuration: WriteConfiguration, id: str, body):
