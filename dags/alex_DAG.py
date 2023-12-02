@@ -19,5 +19,13 @@ with datatrack_dag:
         region_name="eu-west-1",
         overrides={"command": ["python3", "ingest.py", "--date", "{{ ds }}"]},
     )
+    cleaning = BatchOperator(
+        task_id="trigger_cleaning",
+        job_name="alex-datatrack-clean",
+        job_queue="integrated-exercise-job-queue",
+        job_definition="alex-datatrack-clean",
+        region_name="eu-west-1",
+        overrides={"command": ["python3", "spark_clean.py", "--date", "{{ ds }}", "--bucket_path", "s3a://data-track-integrated-exercise/alex-data"]},
+    )
 
-ingestion
+ingestion >> cleaning
