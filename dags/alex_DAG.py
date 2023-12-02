@@ -17,7 +17,7 @@ with datatrack_dag:
         job_queue="integrated-exercise-job-queue",
         job_definition="alex-datatrack",
         region_name="eu-west-1",
-        overrides={"command": ["python3", "datatrack_orchestrator.py", "--date", "{{ ds }}"]},
+        overrides={"command": ["python3", "ingest.py", "--date", "{{ ds }}"]},
     )
 
 ingestion
