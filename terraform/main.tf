@@ -1,5 +1,5 @@
 resource "aws_batch_job_definition" "alex-datatrack" {
-  name = "alex-datatrack"
+  name = "alex-datatrack-ingest"
   type = "container"
   platform_capabilities = ["EC2"]
   container_properties = jsonencode({

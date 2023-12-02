@@ -13,9 +13,9 @@ datatrack_dag = DAG(
 with datatrack_dag:
     ingestion = BatchOperator(
         task_id="trigger_batch",
-        job_name="alex-datatrack-ingestion",
+        job_name="alex-datatrack-ingest",
         job_queue="integrated-exercise-job-queue",
-        job_definition="alex-datatrack",
+        job_definition="alex-datatrack-ingest",
         region_name="eu-west-1",
         overrides={"command": ["python3", "ingest.py", "--date", "{{ ds }}"]},
     )
