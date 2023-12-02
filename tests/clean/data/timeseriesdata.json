@@ -1,0 +1,39 @@
+[{
+    "timeseriesdata_id": "6906",
+    "values": [
+        {
+            "timestamp": 1701133200000,
+            "value": 13.5
+        },
+        {
+            "timestamp": 1701136800000,
+            "value": 12.5
+        },
+        {
+            "timestamp": 1701140400000,
+            "value": 7.5
+        }
+    ]
+},
+{
+  "timeseriesdata_id": "10897",
+  "values": [
+      {
+          "timestamp": 1701133200000,
+          "value": null
+      },
+      {
+          "timestamp": 1701136800000,
+          "value": null
+      },
+      {
+          "timestamp": 1701169200000,
+          "value": 0.315
+      },
+      {
+          "timestamp": 1701172800000,
+          "value": 0.35
+      }
+  ]
+}
+]
