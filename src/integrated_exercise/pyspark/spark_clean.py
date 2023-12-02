@@ -23,6 +23,7 @@ stations = 'stations'
 timeseries = 'timeseries'
 timeseriesdata = 'timeseriesdata'
 
+
 def read(date: str) -> dict:
     bucket = "data-track-integrated-exercise"
     df_categories = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{categories}")
@@ -58,7 +59,7 @@ def transform_timeseries_data(df_timeseries_data: DataFrame, date: str) -> DataF
 def write_dataframes(dataframes: dict, date: str):
     bucket = os.getenv("bucket")
     for key in dataframes.keys():
-        dataframes.get(key).write.parquet(f"s3a://{bucket}/alex-data/clean/{date}/{key}", mode="overwrite")
+        dataframes.get(key).write.parquet(f"s3a://{bucket}/alex-data/source/{date}/{key}", mode="overwrite")
 
 
 def main():
