@@ -5,6 +5,7 @@ import os
 import logging
 import argparse
 import sys
+import raw_reader
 
 spark = SparkSession.builder.config(
     "spark.jars.packages",
@@ -24,9 +25,11 @@ timeseries = 'timeseries'
 timeseriesdata = 'timeseriesdata'
 
 
-def read(date: str) -> dict:
+def read(bucket_read_path: str, date: str) -> dict:
     bucket = "data-track-integrated-exercise"
-    df_categories = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{categories}")
+
+    df_categories = raw_reader.read_categories(spark, bucket_read_path, date)
+
     df_stations = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{stations}")
     df_timeseries = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{timeseries}")
     df_timeseriesdata = spark.read.json(f"s3a://{bucket}/alex-data/{date}/{timeseriesdata}")
@@ -64,7 +67,7 @@ def write_dataframes(dataframes: dict, date: str):
 
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    logging.info("Entering pyspark main")
+    logging.info("Entering clean main")
     parser = argparse.ArgumentParser(description="Pyspark clean")
     parser.add_argument(
         "-d", "--date", dest="date", help="Date in format YYYY-mm-dd", required=True

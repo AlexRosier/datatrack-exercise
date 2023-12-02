@@ -5,7 +5,7 @@ WORKDIR /opt/spark/work-dir
 
 USER 0
 
-ADD src/integrated_exercise/pyspark/spark_clean.py spark_clean.py
+ADD src/integrated_exercise/clean/spark_clean.py spark_clean.py
 ADD requirementsclean.in requirementsclean.in
 RUN pip install -r requirementsclean.in
 COPY . .

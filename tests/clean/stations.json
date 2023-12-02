@@ -1,0 +1,112 @@
+[{
+    "properties": {
+        "timeseries": {
+            "6151": {
+                "service": {
+                    "id": "1",
+                    "label": "IRCEL - CELINE: timeseries-api (SOS 2.0)"
+                },
+                "offering": {
+                    "id": "6151",
+                    "label": "6151 - Unknown device - procedure"
+                },
+                "feature": {
+                    "id": "1030",
+                    "label": "40AL01 - Linkeroever"
+                },
+                "procedure": {
+                    "id": "6151",
+                    "label": "6151 - Unknown device - procedure"
+                },
+                "phenomenon": {
+                    "id": "391",
+                    "label": "Black Carbon"
+                },
+                "category": {
+                    "id": "391",
+                    "label": "Black Carbon"
+                }
+            },
+            "6152": {
+                "service": {
+                    "id": "1",
+                    "label": "IRCEL - CELINE: timeseries-api (SOS 2.0)"
+                },
+                "offering": {
+                    "id": "6152",
+                    "label": "6152 - DAILY CORRECTION TEOM - procedure"
+                },
+                "feature": {
+                    "id": "1030",
+                    "label": "40AL01 - Linkeroever"
+                },
+                "procedure": {
+                    "id": "6152",
+                    "label": "6152 - DAILY CORRECTION TEOM - procedure"
+                },
+                "phenomenon": {
+                    "id": "5",
+                    "label": "Particulate Matter < 10"
+                },
+                "category": {
+                    "id": "5",
+                    "label": "Particulate Matter < 10"
+                }
+            }
+        },
+        "id": 1030,
+        "label": "40AL01 - Linkeroever"
+    },
+    "geometry": {
+        "coordinates": [
+            4.385223684454717,
+            51.23619419990248,
+            "NaN"
+        ],
+        "type": "Point"
+    },
+    "type": "Feature"
+},
+{
+    "properties": {
+        "timeseries": {
+            "6153": {
+                "service": {
+                    "id": "1",
+                    "label": "IRCEL - CELINE: timeseries-api (SOS 2.0)"
+                },
+                "offering": {
+                    "id": "6153",
+                    "label": "6153 - Unknown device - procedure"
+                },
+                "feature": {
+                    "id": "1031",
+                    "label": "40AL02 - Beveren"
+                },
+                "procedure": {
+                    "id": "6153",
+                    "label": "6153 - Unknown device - procedure"
+                },
+                "phenomenon": {
+                    "id": "5",
+                    "label": "Particulate Matter < 10"
+                },
+                "category": {
+                    "id": "5",
+                    "label": "Particulate Matter < 10"
+                }
+            }
+        },
+        "id": 1031,
+        "label": "40AL02 - Beveren"
+    },
+    "geometry": {
+        "coordinates": [
+            4.234832753144059,
+            51.30452079034428,
+            "NaN"
+        ],
+        "type": "Point"
+    },
+    "type": "Feature"
+}]
