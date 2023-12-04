@@ -42,6 +42,7 @@ def transform(dataframes: dict[str, DataFrame]) -> dict[str, DataFrame]:
 def join(dataframes: dict[str, DataFrame]) -> DataFrame:
     df_stations = dataframes.get(stations)
     df_timeseriesdata = dataframes.get(timeseriesdata)
+    logging.info("dataframes : " + str(dataframes))
     logging.info("station columns : " + str(df_stations.columns))
     df_joined = df_stations.join(df_timeseriesdata, df_stations.timeseries_id == df_timeseriesdata.timeseriesdata_id, "leftouter")
     return df_joined.drop(psf.col("timeseriesdata_id"))
