@@ -7,7 +7,7 @@ def read_categories(spark: SparkSession, bucket_path: str, date: str) -> DataFra
 
 
 def read_stations(spark: SparkSession, bucket_path: str, date: str) -> DataFrame:
-    return spark.read.json(f"{bucket_path}/source/{date}/stations")
+    return __read_from_s3(f"{bucket_path}/source/{date}/stations")
 
 
 def read_timeseries(spark: SparkSession, bucket_path: str, date: str) -> DataFrame:
