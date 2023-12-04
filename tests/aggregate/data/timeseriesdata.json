@@ -1,0 +1,650 @@
+[
+   {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700701200000",
+        "value": 19.9,
+        "epoch_seconds": "1700701200",
+        "timestamp": "2023-11-23 00:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700704800000",
+        "value": 20.4,
+        "epoch_seconds": "1700704800",
+        "timestamp": "2023-11-23 01:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700708400000",
+        "value": 19.4,
+        "epoch_seconds": "1700708400",
+        "timestamp": "2023-11-23 02:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700712000000",
+        "value": 18.4,
+        "epoch_seconds": "1700712000",
+        "timestamp": "2023-11-23 03:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700715600000",
+        "value": 17.4,
+        "epoch_seconds": "1700715600",
+        "timestamp": "2023-11-23 04:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700719200000",
+        "value": 16.4,
+        "epoch_seconds": "1700719200",
+        "timestamp": "2023-11-23 05:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700722800000",
+        "value": 15.4,
+        "epoch_seconds": "1700722800",
+        "timestamp": "2023-11-23 06:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700726400000",
+        "value": 15.4,
+        "epoch_seconds": "1700726400",
+        "timestamp": "2023-11-23 07:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700730000000",
+        "value": 13.9,
+        "epoch_seconds": "1700730000",
+        "timestamp": "2023-11-23 08:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700733600000",
+        "value": 14.9,
+        "epoch_seconds": "1700733600",
+        "timestamp": "2023-11-23 09:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700737200000",
+        "value": 13.9,
+        "epoch_seconds": "1700737200",
+        "timestamp": "2023-11-23 10:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700740800000",
+        "value": 16.9,
+        "epoch_seconds": "1700740800",
+        "timestamp": "2023-11-23 11:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700744400000",
+        "value": 20.4,
+        "epoch_seconds": "1700744400",
+        "timestamp": "2023-11-23 12:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700748000000",
+        "value": 17.9,
+        "epoch_seconds": "1700748000",
+        "timestamp": "2023-11-23 13:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700751600000",
+        "value": 16.9,
+        "epoch_seconds": "1700751600",
+        "timestamp": "2023-11-23 14:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700755200000",
+        "value": 19.9,
+        "epoch_seconds": "1700755200",
+        "timestamp": "2023-11-23 15:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700758800000",
+        "value": 18.4,
+        "epoch_seconds": "1700758800",
+        "timestamp": "2023-11-23 16:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700762400000",
+        "value": 14.9,
+        "epoch_seconds": "1700762400",
+        "timestamp": "2023-11-23 17:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700766000000",
+        "value": 16.9,
+        "epoch_seconds": "1700766000",
+        "timestamp": "2023-11-23 18:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700769600000",
+        "value": 16.4,
+        "epoch_seconds": "1700769600",
+        "timestamp": "2023-11-23 19:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700773200000",
+        "value": 17.4,
+        "epoch_seconds": "1700773200",
+        "timestamp": "2023-11-23 20:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700776800000",
+        "value": 16.9,
+        "epoch_seconds": "1700776800",
+        "timestamp": "2023-11-23 21:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700780400000",
+        "value": 12.4,
+        "epoch_seconds": "1700780400",
+        "timestamp": "2023-11-23 22:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6152",
+        "epoch_milliseconds": "1700784000000",
+        "value": 19.4,
+        "epoch_seconds": "1700784000",
+        "timestamp": "2023-11-23 23:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700701200000",
+        "value": 1.005,
+        "epoch_seconds": "1700701200",
+        "timestamp": "2023-11-23 00:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700704800000",
+        "value": 2.01,
+        "epoch_seconds": "1700704800",
+        "timestamp": "2023-11-23 01:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700708400000",
+        "value": 0.67,
+        "epoch_seconds": "1700708400",
+        "timestamp": "2023-11-23 02:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700712000000",
+        "value": 0.54,
+        "epoch_seconds": "1700712000",
+        "timestamp": "2023-11-23 03:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700715600000",
+        "value": 0.475,
+        "epoch_seconds": "1700715600",
+        "timestamp": "2023-11-23 04:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700719200000",
+        "value": 0.45,
+        "epoch_seconds": "1700719200",
+        "timestamp": "2023-11-23 05:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700722800000",
+        "value": 0.425,
+        "epoch_seconds": "1700722800",
+        "timestamp": "2023-11-23 06:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700726400000",
+        "value": 0.465,
+        "epoch_seconds": "1700726400",
+        "timestamp": "2023-11-23 07:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700730000000",
+        "value": 0.55,
+        "epoch_seconds": "1700730000",
+        "timestamp": "2023-11-23 08:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700733600000",
+        "value": 0.555,
+        "epoch_seconds": "1700733600",
+        "timestamp": "2023-11-23 09:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700737200000",
+        "value": 0.48,
+        "epoch_seconds": "1700737200",
+        "timestamp": "2023-11-23 10:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700740800000",
+        "value": 0.46,
+        "epoch_seconds": "1700740800",
+        "timestamp": "2023-11-23 11:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700744400000",
+        "value": 0.46,
+        "epoch_seconds": "1700744400",
+        "timestamp": "2023-11-23 12:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700748000000",
+        "value": 0.44,
+        "epoch_seconds": "1700748000",
+        "timestamp": "2023-11-23 13:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700751600000",
+        "value": 0.525,
+        "epoch_seconds": "1700751600",
+        "timestamp": "2023-11-23 14:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700755200000",
+        "value": 0.45,
+        "epoch_seconds": "1700755200",
+        "timestamp": "2023-11-23 15:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700758800000",
+        "value": 0.55,
+        "epoch_seconds": "1700758800",
+        "timestamp": "2023-11-23 16:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700762400000",
+        "value": 0.545,
+        "epoch_seconds": "1700762400",
+        "timestamp": "2023-11-23 17:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700766000000",
+        "value": 0.57,
+        "epoch_seconds": "1700766000",
+        "timestamp": "2023-11-23 18:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700769600000",
+        "value": 0.575,
+        "epoch_seconds": "1700769600",
+        "timestamp": "2023-11-23 19:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700773200000",
+        "value": 0.55,
+        "epoch_seconds": "1700773200",
+        "timestamp": "2023-11-23 20:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700776800000",
+        "value": 0.445,
+        "epoch_seconds": "1700776800",
+        "timestamp": "2023-11-23 21:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700780400000",
+        "value": 0.27,
+        "epoch_seconds": "1700780400",
+        "timestamp": "2023-11-23 22:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6151",
+        "epoch_milliseconds": "1700784000000",
+        "value": 0.495,
+        "epoch_seconds": "1700784000",
+        "timestamp": "2023-11-23 23:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700701200000",
+        "value": 20.4,
+        "epoch_seconds": "1700701200",
+        "timestamp": "2023-11-23 00:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700704800000",
+        "value": 24.4,
+        "epoch_seconds": "1700704800",
+        "timestamp": "2023-11-23 01:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700708400000",
+        "value": 22.4,
+        "epoch_seconds": "1700708400",
+        "timestamp": "2023-11-23 02:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700712000000",
+        "value": 20.4,
+        "epoch_seconds": "1700712000",
+        "timestamp": "2023-11-23 03:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700715600000",
+        "value": 17.9,
+        "epoch_seconds": "1700715600",
+        "timestamp": "2023-11-23 04:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700719200000",
+        "value": 13.9,
+        "epoch_seconds": "1700719200",
+        "timestamp": "2023-11-23 05:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700722800000",
+        "value": 13.4,
+        "epoch_seconds": "1700722800",
+        "timestamp": "2023-11-23 06:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700726400000",
+        "value": 19.4,
+        "epoch_seconds": "1700726400",
+        "timestamp": "2023-11-23 07:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700730000000",
+        "value": 16.4,
+        "epoch_seconds": "1700730000",
+        "timestamp": "2023-11-23 08:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700733600000",
+        "value": 14.4,
+        "epoch_seconds": "1700733600",
+        "timestamp": "2023-11-23 09:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700737200000",
+        "value": 13.9,
+        "epoch_seconds": "1700737200",
+        "timestamp": "2023-11-23 10:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700740800000",
+        "value": 13.4,
+        "epoch_seconds": "1700740800",
+        "timestamp": "2023-11-23 11:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700744400000",
+        "value": 14.4,
+        "epoch_seconds": "1700744400",
+        "timestamp": "2023-11-23 12:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700748000000",
+        "value": 13.9,
+        "epoch_seconds": "1700748000",
+        "timestamp": "2023-11-23 13:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700751600000",
+        "value": 13.4,
+        "epoch_seconds": "1700751600",
+        "timestamp": "2023-11-23 14:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700755200000",
+        "value": 13.9,
+        "epoch_seconds": "1700755200",
+        "timestamp": "2023-11-23 15:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700758800000",
+        "value": 14.9,
+        "epoch_seconds": "1700758800",
+        "timestamp": "2023-11-23 16:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700762400000",
+        "value": 15.4,
+        "epoch_seconds": "1700762400",
+        "timestamp": "2023-11-23 17:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700766000000",
+        "value": 15.9,
+        "epoch_seconds": "1700766000",
+        "timestamp": "2023-11-23 18:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700769600000",
+        "value": 16.9,
+        "epoch_seconds": "1700769600",
+        "timestamp": "2023-11-23 19:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700773200000",
+        "value": 16.4,
+        "epoch_seconds": "1700773200",
+        "timestamp": "2023-11-23 20:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700776800000",
+        "value": 15.4,
+        "epoch_seconds": "1700776800",
+        "timestamp": "2023-11-23 21:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700780400000",
+        "value": 13.9,
+        "epoch_seconds": "1700780400",
+        "timestamp": "2023-11-23 22:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "6153",
+        "epoch_milliseconds": "1700784000000",
+        "value": 18.4,
+        "epoch_seconds": "1700784000",
+        "timestamp": "2023-11-23 23:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
+    }
+]

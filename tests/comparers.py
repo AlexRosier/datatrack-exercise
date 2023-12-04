@@ -26,6 +26,7 @@ def assert_frames_functionally_equivalent(
         expected.printSchema()
         print("Actual schema : ")
         actual.printSchema()
+        print("Difference : " + str(set(actual.schema.fields) - set(expected.schema.fields)))
         logging.warning(actual.schema)
         logging.warning(expected.schema)
         raise

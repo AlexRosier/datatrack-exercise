@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.sql import DataFrame
 import logging
 import argparse
 import sys
@@ -27,7 +28,7 @@ timeseries = 'timeseries'
 timeseriesdata = 'timeseriesdata'
 
 
-def read(bucket_path: str, date: str) -> dict:
+def read(bucket_path: str, date: str) -> dict[str, DataFrame]:
     df_categories = raw_reader.read_categories(spark, bucket_path, date)
     df_stations = raw_reader.read_stations(spark, bucket_path, date)
     df_timeseries = raw_reader.read_timeseries(spark, bucket_path, date)
@@ -37,7 +38,7 @@ def read(bucket_path: str, date: str) -> dict:
             timeseriesdata: df_timeseriesdata}
 
 
-def transform_dataframes(dataframes: dict, date: str) -> dict:
+def transform_dataframes(dataframes: dict[str, DataFrame], date: str) -> dict[str, DataFrame]:
     df_categories = categories_transformer.transform(dataframes.get(categories), date)
     df_stations = stations_transformer.transform(dataframes.get(stations), date)
     df_timeseries = timeseries_transformer.transform(dataframes.get(timeseries), date)
@@ -47,7 +48,7 @@ def transform_dataframes(dataframes: dict, date: str) -> dict:
             timeseriesdata: df_timeseriesdata}
 
 
-def write_dataframes(dataframes: dict, bucket_path: str, date: str):
+def write_dataframes(dataframes: dict[str, DataFrame], bucket_path: str, date: str):
     for key in dataframes.keys():
         dataframes.get(key).write.parquet(f"{bucket_path}/source/{date}/{key}/", mode="overwrite")
 
