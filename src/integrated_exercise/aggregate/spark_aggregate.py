@@ -49,6 +49,7 @@ def join(dataframes: dict[str, DataFrame]) -> DataFrame:
 def write(dataframe: DataFrame, bucket_path: str, date: str):
     dataframe.write.partitionBy("station_category_id").parquet(f"{bucket_path}/derived/{date}/stations_average_value/", mode="overwrite")
 
+
 def execute_base_aggregation(dataframes: dict[str, DataFrame]) -> DataFrame:
     dataframes_transformed = transform(dataframes)
     return join(dataframes_transformed)
@@ -69,3 +70,7 @@ def main():
     dataframes = read(args.bucket_path, args.date)
     dataframe = execute_base_aggregation(dataframes)
     write(dataframe, args.bucket_path, args.date)
+
+
+if __name__ == "__main__":
+    main()
