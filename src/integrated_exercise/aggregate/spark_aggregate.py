@@ -61,7 +61,7 @@ def execute_base_aggregation(dataframes: dict[str, DataFrame]) -> DataFrame:
 
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    logging.info("Entering clean main")
+    logging.info("Entering aggregate main")
     parser = argparse.ArgumentParser(description="Pyspark clean")
     parser.add_argument(
         "-d", "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
