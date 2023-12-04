@@ -27,5 +27,14 @@ with datatrack_dag:
         region_name="eu-west-1",
         overrides={"command": ["python3", "spark_clean.py", "--date", "{{ ds }}", "--bucket_path", "s3a://data-track-integrated-exercise/alex-data"]},
     )
+    aggregation = BatchOperator(
+        task_id="trigger_aggregation",
+        job_name="alex-datatrack-spark_aggregate",
+        job_queue="integrated-exercise-job-queue",
+        job_definition="alex-datatrack-spark_aggregate",
+        region_name="eu-west-1",
+        overrides={"command": ["python3", "spark_aggregate.py", "--date", "{{ ds }}", "--bucket_path", "s3a://data-track-integrated-exercise/alex-data"]},
+    )
 
-ingestion >> cleaning
+
+ingestion >> cleaning >> aggregation
