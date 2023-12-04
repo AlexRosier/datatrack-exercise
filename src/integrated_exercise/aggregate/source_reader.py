@@ -19,4 +19,4 @@ def read_timeseriesdata(spark: SparkSession, bucket_path: str, date: str) -> Dat
 
 
 def __read_from_s3(spark: SparkSession, path: str) -> DataFrame:
-    return spark.read.json(path)
+    return spark.read.parquet(path)
