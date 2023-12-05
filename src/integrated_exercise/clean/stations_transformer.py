@@ -46,11 +46,13 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
 
     return df_dropped.replace(float("NaN"), None)
 
+
 def __enrich_with_geo_info(dataframe: DataFrame) -> DataFrame:
     udf_enrich_with_geo_info = __create_geo_enrich_udf()
 
     df_enriched = dataframe.withColumn("station", udf_enrich_with_geo_info(psf.col("station_coordinates_x"), psf.col("station_coordinates_y")))
     return df_enriched.withColumns({
+        "station_postal_code": psf.col("station.postal_code"),
         "station_city": psf.col("station.city"),
         "station_state": psf.col("station.state"),
         "station_country": psf.col("station.country")
@@ -59,6 +61,7 @@ def __enrich_with_geo_info(dataframe: DataFrame) -> DataFrame:
 
 def __create_geo_enrich_udf() -> psf.udf:
     schema = StructType([
+        StructField("postal_code", StringType()),
         StructField("city", StringType()),
         StructField("state", StringType()),
         StructField("country", StringType())
@@ -72,6 +75,6 @@ def __get_geo_info(x_coordinate: float, y_coordinate: float) -> Row:
         query = f"{x_coordinate}, {y_coordinate}"
         response = geolocator.reverse(query, language="en")
         address = response.raw['address']
-        return Row('city', 'state', 'country')(address.get('city', None), address.get('state', None), address.get('country', None))
+        return Row('postal_code', 'city', 'state', 'country')(address.get('postcode', None), address.get('city', None), address.get('state', None), address.get('country', None))
     except:
-        return  Row('city', 'state', 'country')(None, None, None)
+        return Row('postal_code', 'city', 'state', 'country')(None, None, None, None)
