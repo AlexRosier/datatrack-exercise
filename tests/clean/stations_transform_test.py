@@ -40,9 +40,9 @@ def test_transform():
         StructField("station_coordinates_z", FloatType(), True),
         StructField("station_coordinates_type", StringType()),
         StructField("station_postal_code", StringType()),
-        StructField("station_city", StringType()),
-        StructField("station_state", StringType()),
-        StructField("station_country", StringType()),
+        StructField("station_geo_level_1", StringType()),
+        StructField("station_geo_level_2", StringType()),
+        StructField("station_geo_level_3", StringType()),
         StructField("ds", StringType(), False),
     ]
     df_expected = spark.createDataFrame(
@@ -58,7 +58,7 @@ def test_transform():
             (1031, "40AL02 - Beveren", "Feature", 6153, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6153",
              "6153 - Unknown device - procedure", "1031", "40AL02 - Beveren", "6153",
              "6153 - Unknown device - procedure", "5", "Particulate Matter < 10", "5", "Particulate Matter < 10",
-             51.30452079034428, 4.234832753144059, None, "Point", "9130", None, "East Flanders", "Belgium", date)
+             51.30452079034428, 4.234832753144059, None, "Point", "9130", "Sint-Niklaas", "East Flanders", "Belgium", date)
         ],
         schema=StructType(fields),
     )

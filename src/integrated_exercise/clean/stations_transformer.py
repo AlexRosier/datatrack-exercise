@@ -53,28 +53,37 @@ def __enrich_with_geo_info(dataframe: DataFrame) -> DataFrame:
     df_enriched = dataframe.withColumn("station", udf_enrich_with_geo_info(psf.col("station_coordinates_x"), psf.col("station_coordinates_y")))
     return df_enriched.withColumns({
         "station_postal_code": psf.col("station.postal_code"),
-        "station_city": psf.col("station.city"),
-        "station_state": psf.col("station.state"),
-        "station_country": psf.col("station.country")
+        "station_geo_level_1": psf.col("station.geo_level_1"),
+        "station_geo_level_2": psf.col("station.geo_level_2"),
+        "station_geo_level_3": psf.col("station.geo_level_3")
     })
 
 
 def __create_geo_enrich_udf() -> psf.udf:
     schema = StructType([
         StructField("postal_code", StringType()),
-        StructField("city", StringType()),
-        StructField("state", StringType()),
-        StructField("country", StringType())
+        StructField("geo_level_1", StringType()),
+        StructField("geo_level_2", StringType()),
+        StructField("geo_level_3", StringType())
     ])
 
     return psf.udf(__get_geo_info, schema)
 
-
+coordinateRows = {}
 def __get_geo_info(x_coordinate: float, y_coordinate: float) -> Row:
     try:
         query = f"{x_coordinate}, {y_coordinate}"
-        response = geolocator.reverse(query, language="en")
-        address = response.raw['address']
-        return Row('postal_code', 'city', 'state', 'country')(address.get('postcode', None), address.get('city', None), address.get('state', None), address.get('country', None))
+        if query in coordinateRows:
+            return coordinateRows[query]
+        else:
+            response = geolocator.reverse(query, language="en")
+            address = response.raw['address']
+            row = Row('postal_code', 'geo_level_1', 'geo_level_2', 'geo_level_3')(
+                address.get('postcode', None),
+                address.get('city', address.get('county', None)),
+                address.get('state', address.get('region', None)),
+                address.get('country', None))
+            coordinateRows[query] = row
+            return row
     except:
         return Row('postal_code', 'city', 'state', 'country')(None, None, None, None)
