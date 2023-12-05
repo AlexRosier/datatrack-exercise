@@ -39,22 +39,25 @@ def test_transform():
         StructField("station_coordinates_y", FloatType()),
         StructField("station_coordinates_z", FloatType(), True),
         StructField("station_coordinates_type", StringType()),
-        StructField("ds", StringType(), False)
+        StructField("station_city", StringType()),
+        StructField("station_state", StringType()),
+        StructField("station_country", StringType()),
+        StructField("ds", StringType(), False),
     ]
     df_expected = spark.createDataFrame(
         [
             (1030, "40AL01 - Linkeroever", "Feature", 6151, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6151",
              "6151 - Unknown device - procedure", "1030", "40AL01 - Linkeroever", "6151",
-             "6151 - Unknown device - procedure", "391", "Black Carbon", "391", "Black Carbon", 4.385223684454717,
-             51.23619419990248, None, "Point", date),
+             "6151 - Unknown device - procedure", "391", "Black Carbon", "391", "Black Carbon", 51.23619419990248,
+             4.385223684454717, None, "Point", "Antwerp", "Antwerp", "Belgium", date),
             (1030, "40AL01 - Linkeroever", "Feature", 6152, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6152",
              "6152 - DAILY CORRECTION TEOM - procedure", "1030", "40AL01 - Linkeroever", "6152",
              "6152 - DAILY CORRECTION TEOM - procedure", "5", "Particulate Matter < 10", "5",
-             "Particulate Matter < 10", 4.385223684454717, 51.23619419990248, None, "Point", date),
+             "Particulate Matter < 10", 51.23619419990248, 4.385223684454717, None, "Point", "Antwerp", "Antwerp", "Belgium", date),
             (1031, "40AL02 - Beveren", "Feature", 6153, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6153",
              "6153 - Unknown device - procedure", "1031", "40AL02 - Beveren", "6153",
              "6153 - Unknown device - procedure", "5", "Particulate Matter < 10", "5", "Particulate Matter < 10",
-             4.234832753144059, 51.30452079034428, None, "Point", date)
+             51.30452079034428, 4.234832753144059, None, "Point", None, "East Flanders", "Belgium", date)
         ],
         schema=StructType(fields),
     )
