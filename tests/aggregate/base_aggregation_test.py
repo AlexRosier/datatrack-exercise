@@ -3,12 +3,11 @@ from pyspark.sql.types import (
     StringType,
     StructField,
     StructType,
-    IntegerType,
     LongType,
     DoubleType
 )
 from tests.comparers import assert_frames_functionally_equivalent
-from src.integrated_exercise.aggregate import spark_aggregate
+from src.integrated_exercise.aggregate import base_aggregation
 
 spark = SparkSession.builder.master("local[*]").getOrCreate()
 df_stations = spark.read.option("multiline", "true").json("data/stations.json")
@@ -16,7 +15,7 @@ df_timeseriesdata = spark.read.option("multiline", "true").json("data/timeseries
 
 
 def test_execute_base_aggregation():
-    df_aggregated = spark_aggregate.execute_base_aggregation({spark_aggregate.stations: df_stations, spark_aggregate.timeseriesdata: df_timeseriesdata})
+    df_aggregated = base_aggregation._execute_base_aggregation({base_aggregation.stations: df_stations, base_aggregation.timeseriesdata: df_timeseriesdata})
 
     fields = [
         StructField("station_id", LongType()),
@@ -35,11 +34,17 @@ def test_execute_base_aggregation():
         StructField("station_phenomenon_label", StringType()),
         StructField("station_category_id", StringType()),
         StructField("station_category_label", StringType()),
-        StructField("station_coordinates_x", DoubleType()),
-        StructField("station_coordinates_y", DoubleType()),
+        StructField("station_coordinates_lon", DoubleType()),
+        StructField("station_coordinates_lat", DoubleType()),
         StructField("station_coordinates_z", StringType(), True),
         StructField("station_coordinates_type", StringType()),
         StructField("average_value", DoubleType()),
+        StructField("station_postal_code", StringType()),
+        StructField("station_county", StringType()),
+        StructField("station_city", StringType()),
+        StructField("station_state", StringType()),
+        StructField("station_region", StringType()),
+        StructField("station_country", StringType()),
         StructField("ds", StringType(), False)
     ]
     df_expected = spark.read.option("multiline", "true").json("data/expected/base_aggregation.json",  schema=StructType(fields))

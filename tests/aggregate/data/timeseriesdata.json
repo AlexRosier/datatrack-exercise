@@ -646,5 +646,14 @@
         "timestamp": "2023-11-23 23:00:00",
         "timezone": "CET",
         "ds": "2023-11-24"
+    },
+    {
+        "timeseriesdata_id": "100039",
+        "epoch_milliseconds": "1700784000000",
+        "value": 18.0,
+        "epoch_seconds": "1700784000",
+        "timestamp": "2023-11-23 23:00:00",
+        "timezone": "CET",
+        "ds": "2023-11-24"
     }
 ]

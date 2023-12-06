@@ -5,7 +5,7 @@ import logging
 import argparse
 import sys
 
-import src.integrated_exercise.aggregate.source_reader as source_reader
+import src.integrated_exercise.aggregate.base_aggregation as base_aggregation
 
 stations = 'stations'
 timeseriesdata = 'timeseriesdata'
@@ -23,40 +23,15 @@ spark = SparkSession.builder.config(
 ).getOrCreate()
 
 
-def read(bucket_path: str, date: str) -> dict[str, DataFrame]:
-    df_stations = source_reader.read_stations(spark, bucket_path, date)
-    logging.info("Stations read coulms: " + str(df_stations.columns))
-    df_stations.show(10, False)
-    df_timeseriesdata = source_reader.read_timeseriesdata(spark, bucket_path, date)
-
-    return {stations: df_stations, timeseriesdata: df_timeseriesdata}
+def most_polluted_pm10(dataframe: DataFrame) -> DataFrame:
+    return (dataframe
+            .groupBy(psf.col('station_county'), psf.col('station_city'), psf.col('station_state'), psf.col("station_category_id"), psf.col("ds"))
+            .agg(psf.avg("average_value").alias("city_average_value"))
+            .sort(psf.col("city_average_value"), ascending=False))
 
 
-def transform(dataframes: dict[str, DataFrame]) -> dict[str, DataFrame]:
-    df_timeseriesdata_transformed = (dataframes.get(timeseriesdata)
-                                     .select(psf.col("timeseriesdata_id"), psf.col("value"))
-                                     .groupBy(psf.col('timeseriesdata_id')).agg(psf.avg("value").alias("average_value")))
-
-    dataframes.update({timeseriesdata: df_timeseriesdata_transformed})
-    return dataframes
-
-
-def join(dataframes: dict[str, DataFrame]) -> DataFrame:
-    df_stations = dataframes.get(stations)
-    df_timeseriesdata = dataframes.get(timeseriesdata)
-    logging.info("dataframes : " + str(dataframes))
-    logging.info("station columns : " + str(df_stations.columns))
-    df_joined = df_stations.join(df_timeseriesdata, df_stations.timeseries_id == df_timeseriesdata.timeseriesdata_id, "leftouter")
-    return df_joined.drop(psf.col("timeseriesdata_id"))
-
-
-def write(dataframe: DataFrame, bucket_path: str, date: str):
-    dataframe.write.partitionBy("station_category_id").parquet(f"{bucket_path}/derived/{date}/stations_average_value/", mode="overwrite")
-
-
-def execute_base_aggregation(dataframes: dict[str, DataFrame]) -> DataFrame:
-    dataframes_transformed = transform(dataframes)
-    return join(dataframes_transformed)
+def __write(dataframe: DataFrame, bucket_path: str, date: str):
+    dataframe.write.parquet(f"{bucket_path}/derived/{date}/most_polluted_pm10/", mode="overwrite")
 
 
 def main():
@@ -71,9 +46,9 @@ def main():
     )
     args = parser.parse_args()
     logging.info(f"Using args: {args}")
-    dataframes = read(args.bucket_path, args.date)
-    dataframe = execute_base_aggregation(dataframes)
-    write(dataframe, args.bucket_path, args.date)
+    df_base_aggregation = base_aggregation.execute(spark, args.bucket_path, args.date)
+    df_most_polluted_pm10 = most_polluted_pm10(df_base_aggregation)
+    __write(df_most_polluted_pm10, args.bucket_path, args.date)
 
 
 if __name__ == "__main__":

@@ -20,6 +20,12 @@
         "station_coordinates_x": 4.385224,
         "station_coordinates_y": 51.236195,
         "station_coordinates_z": null,
+        "station_postal_code" : "2050",
+        "station_county" : "Antwerp",
+        "station_city" : "Antwerp",
+        "station_state" : "Antwerp",
+        "station_region" : "Flanders",
+        "station_country" : "Belgium",
         "ds": "2023-11-24"
     },
     {
@@ -43,6 +49,12 @@
         "station_coordinates_x": 4.385224,
         "station_coordinates_y": 51.236195,
         "station_coordinates_z": null,
+        "station_postal_code" : "2050",
+        "station_county" : "Antwerp",
+        "station_city" : "Antwerp",
+        "station_state" : "Antwerp",
+        "station_region" : "Flanders",
+        "station_country" : "Belgium",
         "ds": "2023-11-24"
     },
     {
@@ -66,6 +78,41 @@
         "station_coordinates_x": 4.234833,
         "station_coordinates_y": 51.30452,
         "station_coordinates_z": null,
+        "station_postal_code" : "9130",
+        "station_county" : "Sint-Niklaas",
+        "station_city" : null,
+        "station_state" : "East Flanders",
+        "station_region" : null,
+        "station_country" : "Belgium",
         "ds": "2023-11-24"
-    }
+    },
+    {
+      "station_id": 1751,
+      "station_label": "40DU07 - Deurne",
+      "station_coordinates_type": "Point",
+      "station_type": "Feature",
+      "timeseries_id": "100039",
+      "station_services_id": "1",
+      "station_services_label": "IRCEL - CELINE: timeseries-api (SOS 2.0)",
+      "station_offering_id": "100039",
+      "station_offering_label": "100039 - FIDAS 200 - procedure",
+      "station_feature_id": "1751",
+      "station_feature_label": "40DU07 - Deurne",
+      "station_procedure_id": "100039",
+      "station_procedure_label": "100039 - FIDAS 200 - procedure",
+      "station_phenomenon_id": "5",
+      "station_phenomenon_label": "Particulate Matter < 10 µm",
+      "station_category_id": "5",
+      "station_category_label": "Particulate Matter < 10 µm",
+      "station_coordinates_x": 4.44875,
+      "station_coordinates_y": 51.226387,
+      "station_coordinates_z": "nan",
+      "station_postal_code": "2100",
+      "station_county": "Antwerp",
+      "station_city": "Antwerp",
+      "station_state": "Antwerp",
+      "station_region": "Flanders",
+      "station_country": "Belgium",
+      "ds": "2023-11-24"
+  }
 ]

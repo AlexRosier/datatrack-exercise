@@ -26,7 +26,7 @@ def assert_frames_functionally_equivalent(
         expected.printSchema()
         print("Actual schema : ")
         actual.printSchema()
-        print("Difference : " + str(set(actual.schema.fields) - set(expected.schema.fields)))
+        print("Difference schema: " + str(set(actual.schema.fields) - set(expected.schema.fields)))
         logging.warning(actual.schema)
         logging.warning(expected.schema)
         raise
@@ -39,4 +39,5 @@ def assert_frames_functionally_equivalent(
         print("Data does not match")
         print(f"Expected : {sorted_rows_expected}")
         print(f"Actual : {sorted_rows_actual}")
+        print("Difference data : " + str(set(sorted_rows_expected) - set(sorted_rows_actual)))
         raise

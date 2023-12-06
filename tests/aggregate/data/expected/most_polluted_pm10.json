@@ -1,0 +1,26 @@
+[
+    {
+        "station_county" : "Antwerp",
+        "station_city" : "Antwerp",
+        "station_state" : "Antwerp",
+        "station_category_id" : "5",
+        "city_average_value" : 17.543749999999996,
+        "ds": "2023-11-24"
+    },
+    {
+        "station_county" : "Sint-Niklaas",
+        "station_city" : null,
+        "station_state" : "East Flanders",
+        "station_category_id" : "5",
+        "city_average_value" : 16.37916666666666,
+        "ds": "2023-11-24"
+    },
+    {
+        "station_county" : "Antwerp",
+        "station_city" : "Antwerp",
+        "station_state" : "Antwerp",
+        "station_category_id" : "391",
+        "city_average_value" : 0.5816666666666667,
+        "ds": "2023-11-24"
+    }
+]

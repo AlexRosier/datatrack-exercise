@@ -11,10 +11,13 @@ geolocator = Nominatim(user_agent="Datatrack-Alex")
 
 
 def transform(df_stations: DataFrame, date: str) -> DataFrame:
-    df_exploded_stations = df_stations.select(
+    df_enriched = __enrich_with_geo_info(df_stations)
+
+    df_exploded_stations = df_enriched.select(
         psf.col("properties.id").alias("station_id"),
         psf.col("properties.label").alias("station_label"),
         psf.col("geometry"),
+        psf.col("station.*"),
         psf.col("geometry.type").alias("station_coordinates_type"),
         psf.col("type").alias('station_type'),
         psf.explode("properties.timeseries").alias("timeseries_id", "timeseries"))
@@ -32,13 +35,12 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
         "station_phenomenon_label": psf.col("timeseries.phenomenon.label"),
         "station_category_id": psf.col("timeseries.category.id"),
         "station_category_label": psf.col("timeseries.category.label"),
-        "station_coordinates_x": psf.col("geometry.coordinates").getItem(1),
-        "station_coordinates_y": psf.col("geometry.coordinates").getItem(0),
+        "station_coordinates_lon": psf.col("geometry.coordinates").getItem(0),
+        "station_coordinates_lat": psf.col("geometry.coordinates").getItem(1),
         "station_coordinates_z": psf.col("geometry.coordinates").getItem(2)
     })
 
-    df_renamed_enriched = __enrich_with_geo_info(df_renamed)
-    df_dropped = (df_renamed_enriched
+    df_dropped = (df_renamed
                   .withColumn("ds", psf.lit(date))
                   .drop("timeseries")
                   .drop("geometry")
@@ -49,47 +51,34 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
 
 def __enrich_with_geo_info(dataframe: DataFrame) -> DataFrame:
     udf_enrich_with_geo_info = __create_geo_enrich_udf()
-
-    df_enriched = dataframe.withColumn("station", udf_enrich_with_geo_info(psf.col("station_coordinates_x"), psf.col("station_coordinates_y")))
-    return df_enriched.withColumns({
-        "station_postal_code": psf.col("station.postal_code"),
-        "station_county": psf.col("station.county"),
-        "station_city": psf.col("station.city"),
-        "station_state": psf.col("station.state"),
-        "station_region": psf.col("station.region"),
-        "station_country": psf.col("station.country")
-    })
+    return dataframe.withColumn("station", udf_enrich_with_geo_info(psf.col("geometry.coordinates").getItem(1), psf.col("geometry.coordinates").getItem(0)))
 
 
 def __create_geo_enrich_udf() -> psf.udf:
     schema = StructType([
-        StructField("postal_code", StringType()),
-        StructField("county", StringType()),
-        StructField("city", StringType()),
-        StructField("state", StringType()),
-        StructField("region", StringType()),
-        StructField("country", StringType()),
+        StructField("station_postal_code", StringType()),
+        StructField("station_county", StringType()),
+        StructField("station_city", StringType()),
+        StructField("station_state", StringType()),
+        StructField("station_region", StringType()),
+        StructField("station_country", StringType()),
     ])
 
     return psf.udf(__get_geo_info, schema)
 
-coordinateRows = {}
-def __get_geo_info(x_coordinate: float, y_coordinate: float) -> Row:
+
+def __get_geo_info(coordinate_lat: float, coordinate_lon: float) -> Row:
     try:
-        query = f"{x_coordinate}, {y_coordinate}"
-        if query in coordinateRows:
-            return coordinateRows[query]
-        else:
-            response = geolocator.reverse(query, language="en")
-            address = response.raw['address']
-            row = Row('postal_code', 'county', 'city', 'state', 'region', 'country')(
-                address.get('postcode', None),
-                address.get('county', None),
-                address.get('city', None),
-                address.get('state', None),
-                address.get('region', None),
-                address.get('country', None))
-            coordinateRows[query] = row
-            return row
+        query = f"{coordinate_lat}, {coordinate_lon}"
+        response = geolocator.reverse(query, language="en")
+        address = response.raw['address']
+        return Row('station_postal_code', 'station_county', 'station_city', 'station_state', 'station_region', 'station_country')(
+            address.get('postcode', None),
+            address.get('county', None),
+            address.get('city', None),
+            address.get('state', None),
+            address.get('region', None),
+            address.get('country', None))
+
     except:
-        return Row('postal_code', 'county', 'city', 'state', 'region', 'country')(None, None, None, None, None, None)
+        return Row('station_postal_code', 'station_county', 'station_city', 'station_state', 'station_region', 'station_country')(None, None, None, None, None, None)
