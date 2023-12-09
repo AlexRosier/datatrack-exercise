@@ -73,7 +73,7 @@ def __get_geo_info(coordinate_lat: float, coordinate_lon: float) -> Row:
         query = f"{coordinate_lat}, {coordinate_lon}"
         response = geolocator.reverse(query, language="en")
         address = response.raw['address']
-        return Row('station_postal_code', 'station_county', 'station_city', 'station_state', 'station_region', 'station_country')(
+        return Row('station_geopy_postal_code', 'station_geopy_county', 'station_geopy_city', 'station_geopy_state', 'station_geopy_region', 'station_geopy_country')(
             address.get('postcode', None),
             address.get('county', None),
             address.get('city', None),
@@ -82,4 +82,4 @@ def __get_geo_info(coordinate_lat: float, coordinate_lon: float) -> Row:
             address.get('country', None))
 
     except:
-        return Row('station_postal_code', 'station_county', 'station_city', 'station_state', 'station_region', 'station_country')(None, None, None, None, None, None)
+        return Row('station_geopy_postal_code', 'station_geopy_county', 'station_geopy_city', 'station_geopy_state', 'station_geopy_region', 'station_geopy_country')(None, None, None, None, None, None)

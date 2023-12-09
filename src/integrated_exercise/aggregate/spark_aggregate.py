@@ -36,7 +36,7 @@ def stations_per_city(dataframe: DataFrame) -> DataFrame:
 
     dataframe_deduplicated = dataframe.dropDuplicates(["station_id"])
     return (dataframe_deduplicated
-            .groupBy(psf.col('station_county'), psf.col('station_city'), psf.col('station_state'), psf.col("ds"))
+            .groupBy(psf.col('station_geopy_county'), psf.col('station_geopy_city'), psf.col('station_geopy_state'), psf.col("ds"))
             .agg(psf.count("station_id").alias("number_of_stations"))
             .sort(psf.col("number_of_stations"), ascending=False))
 

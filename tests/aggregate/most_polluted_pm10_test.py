@@ -19,9 +19,7 @@ def test_most_polluted_pm10():
     df_most_polluted = spark_aggregate.most_polluted_pm10(df_aggregated)
 
     fields = [
-        StructField("station_county", StringType()),
-        StructField("station_city", StringType()),
-        StructField("station_state", StringType()),
+        StructField("station_native_city", StringType()),
         StructField("station_category_id", StringType()),
         StructField("city_average_value", DoubleType(), False),
         StructField("ds", StringType(), False),

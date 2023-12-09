@@ -19,9 +19,9 @@ def test_stations_per_city():
     df_stations_per_city = spark_aggregate.stations_per_city(df_aggregated)
 
     fields = [
-        StructField("station_county", StringType()),
-        StructField("station_city", StringType()),
-        StructField("station_state", StringType()),
+        StructField("station_geopy_county", StringType()),
+        StructField("station_geopy_city", StringType()),
+        StructField("station_geopy_state", StringType()),
         StructField("number_of_stations", LongType(), False),
         StructField("ds", StringType(), False),
     ]

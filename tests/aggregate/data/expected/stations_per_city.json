@@ -1,15 +1,15 @@
 [
     {
-        "station_county" : "Antwerp",
-        "station_city" : "Antwerp",
-        "station_state" : "Antwerp",
+        "station_geopy_county" : "Antwerp",
+        "station_geopy_city" : "Antwerp",
+        "station_geopy_state" : "Antwerp",
         "number_of_stations" : 2,
         "ds": "2023-11-24"
     },
     {
-        "station_county" : "Sint-Niklaas",
-        "station_city" : null,
-        "station_state" : "East Flanders",
+        "station_geopy_county" : "Sint-Niklaas",
+        "station_geopy_city" : null,
+        "station_geopy_state" : "East Flanders",
         "number_of_stations" : 1,
         "ds": "2023-11-24"
     }

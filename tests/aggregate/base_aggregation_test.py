@@ -39,12 +39,13 @@ def test_execute_base_aggregation():
         StructField("station_coordinates_z", StringType(), True),
         StructField("station_coordinates_type", StringType()),
         StructField("average_value", DoubleType()),
-        StructField("station_postal_code", StringType()),
-        StructField("station_county", StringType()),
-        StructField("station_city", StringType()),
-        StructField("station_state", StringType()),
-        StructField("station_region", StringType()),
-        StructField("station_country", StringType()),
+        StructField("station_native_city", StringType()),
+        StructField("station_geopy_postal_code", StringType()),
+        StructField("station_geopy_county", StringType()),
+        StructField("station_geopy_city", StringType()),
+        StructField("station_geopy_state", StringType()),
+        StructField("station_geopy_region", StringType()),
+        StructField("station_geopy_country", StringType()),
         StructField("ds", StringType(), False)
     ]
     df_expected = spark.read.option("multiline", "true").json("data/expected/base_aggregation.json",  schema=StructType(fields))
