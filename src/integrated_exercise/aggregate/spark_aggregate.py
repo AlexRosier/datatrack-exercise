@@ -15,8 +15,8 @@ spark = SparkSession.builder.config(
     ",".join(
         [
             "org.apache.hadoop:hadoop-aws:3.3.1"
-            # "net.snowflake:spark-snowflake_2.13.0-spark_3.4",
-            # "net.snowflake:snowflake-jdbc:3.14.4"
+            "net.snowflake:spark-snowflake_2.13.0-spark_3.4",
+            "net.snowflake:snowflake-jdbc:3.14.4"
         ]
     ),
 ).config(
