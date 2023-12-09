@@ -16,7 +16,7 @@ df_timeseriesdata = spark.read.option("multiline", "true").json("data/timeseries
 
 def test_most_polluted_pm10():
     df_aggregated = base_aggregation._execute_base_aggregation({base_aggregation.stations: df_stations, base_aggregation.timeseriesdata: df_timeseriesdata})
-    df_most_polluted = spark_aggregate.most_polluted_pm10(df_aggregated)
+    df_most_polluted = spark_aggregate.pollution_per_city_and_category(df_aggregated)
 
     fields = [
         StructField("station_native_city", StringType()),
@@ -24,6 +24,6 @@ def test_most_polluted_pm10():
         StructField("city_average_value", DoubleType(), False),
         StructField("ds", StringType(), False),
     ]
-    df_expected = spark.read.option("multiline", "true").json("data/expected/most_polluted_pm10.json", schema=StructType(fields))
+    df_expected = spark.read.option("multiline", "true").json("data/expected/pollution_per_city_and_category.json", schema=StructType(fields))
 
     assert_frames_functionally_equivalent(df_most_polluted, df_expected, False)

@@ -25,7 +25,7 @@ spark = SparkSession.builder.config(
 ).getOrCreate()
 
 
-def most_polluted_pm10(dataframe: DataFrame) -> DataFrame:
+def pollution_per_city_and_category(dataframe: DataFrame) -> DataFrame:
     return (dataframe
             .groupBy(psf.col('station_native_city'), psf.col("station_category_id"), psf.col("ds"))
             .agg(psf.avg("average_value").alias("city_average_value"))
@@ -33,7 +33,6 @@ def most_polluted_pm10(dataframe: DataFrame) -> DataFrame:
 
 
 def stations_per_city(dataframe: DataFrame) -> DataFrame:
-
     dataframe_deduplicated = dataframe.dropDuplicates(["station_id"])
     return (dataframe_deduplicated
             .groupBy(psf.col('station_geopy_county'), psf.col('station_geopy_city'), psf.col('station_geopy_state'), psf.col("ds"))
@@ -48,7 +47,7 @@ def __write(dataframe: DataFrame, bucket_path: str, date: str, key: str):
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     logging.info("Entering aggregate main")
-    parser = argparse.ArgumentParser(description="Pyspark clean")
+    parser = argparse.ArgumentParser(description="Pyspark aggregate")
     parser.add_argument(
         "-d", "--date", dest="date", help="Date in format YYYY-mm-dd", required=True
     )
@@ -59,8 +58,8 @@ def main():
     logging.info(f"Using args: {args}")
     df_base_aggregation = base_aggregation.execute(spark, args.bucket_path, args.date)
 
-    df_most_polluted_pm10 = most_polluted_pm10(df_base_aggregation)
-    __write(df_most_polluted_pm10, args.bucket_path, args.date, "most_polluted_pm10")
+    df_pollution_per_city_and_category = pollution_per_city_and_category(df_base_aggregation)
+    __write(df_pollution_per_city_and_category, args.bucket_path, args.date, "pollution_per_city_and_category")
 
     df_stations_per_city = stations_per_city(df_base_aggregation)
     __write(df_stations_per_city, args.bucket_path, args.date, "stations_per_city")
