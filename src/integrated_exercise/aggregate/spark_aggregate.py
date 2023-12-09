@@ -25,7 +25,7 @@ spark = SparkSession.builder.config(
 
 def most_polluted_pm10(dataframe: DataFrame) -> DataFrame:
     return (dataframe
-            .groupBy(psf.col('station_county'), psf.col('station_city'), psf.col('station_state'), psf.col("station_category_id"), psf.col("ds"))
+            .groupBy(psf.col('station_native_city'), psf.col("station_category_id"), psf.col("ds"))
             .agg(psf.avg("average_value").alias("city_average_value"))
             .sort(psf.col("city_average_value"), ascending=False))
 

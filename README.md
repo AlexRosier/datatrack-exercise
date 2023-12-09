@@ -6,6 +6,7 @@
 
 ### Notes
 - On "Calculate the average of the measurements for a specific station by day" I have partitioned by category_id as I think building dashboards per category is most logical and this would limit the number of files that need to be read. But other things are possible based on business requirements
+- For most_polluted_pm10 I have used the "station_native_city" field which is derived from the station label field. I use this as this how the original data "logic" works and geopy results are not great.
 
 ### Open questions from my end
 - When is a transform a transform ?
