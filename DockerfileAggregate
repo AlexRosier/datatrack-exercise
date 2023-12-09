@@ -8,6 +8,7 @@ USER 0
 ADD src/integrated_exercise/aggregate/spark_aggregate.py spark_aggregate.py
 ADD src/integrated_exercise/aggregate/source_reader.py source_reader.py
 ADD src/integrated_exercise/aggregate/base_aggregation.py base_aggregation.py
+ADD src/integrated_exercise/aggregate/snowflake_credentials_manager.py snowflake_credentials_manager.py
 
 ADD requirementsaggregate.in requirementsaggregate.in
 
