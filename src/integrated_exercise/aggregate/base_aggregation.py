@@ -11,8 +11,6 @@ timeseriesdata = 'timeseriesdata'
 
 def __read(spark: SparkSession, bucket_path: str, date: str) -> dict[str, DataFrame]:
     df_stations = source_reader.read_stations(spark, bucket_path, date)
-    logging.info("Stations read coulms: " + str(df_stations.columns))
-    df_stations.show(10, False)
     df_timeseriesdata = source_reader.read_timeseriesdata(spark, bucket_path, date)
 
     return {stations: df_stations, timeseriesdata: df_timeseriesdata}
