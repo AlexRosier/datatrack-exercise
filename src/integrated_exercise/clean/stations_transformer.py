@@ -37,7 +37,8 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
         "station_category_label": psf.col("timeseries.category.label"),
         "station_coordinates_lon": psf.col("geometry.coordinates").getItem(0),
         "station_coordinates_lat": psf.col("geometry.coordinates").getItem(1),
-        "station_coordinates_z": psf.col("geometry.coordinates").getItem(2)
+        "station_coordinates_z": psf.col("geometry.coordinates").getItem(2),
+        "station_native_city" : psf.split(psf.col("station_label"), " - ").getItem(1)
     })
 
     df_dropped = (df_renamed
@@ -56,12 +57,12 @@ def __enrich_with_geo_info(dataframe: DataFrame) -> DataFrame:
 
 def __create_geo_enrich_udf() -> psf.udf:
     schema = StructType([
-        StructField("station_postal_code", StringType()),
-        StructField("station_county", StringType()),
-        StructField("station_city", StringType()),
-        StructField("station_state", StringType()),
-        StructField("station_region", StringType()),
-        StructField("station_country", StringType()),
+        StructField("station_geopy_postal_code", StringType()),
+        StructField("station_geopy_county", StringType()),
+        StructField("station_geopy_city", StringType()),
+        StructField("station_geopy_state", StringType()),
+        StructField("station_geopy_region", StringType()),
+        StructField("station_geopy_country", StringType()),
     ])
 
     return psf.udf(__get_geo_info, schema)
