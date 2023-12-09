@@ -14,7 +14,7 @@ df_stations = spark.read.option("multiline", "true").json("data/stations.json")
 df_timeseriesdata = spark.read.option("multiline", "true").json("data/timeseriesdata.json")
 
 
-def test_most_polluted_pm10():
+def test_pollution_per_city_and_category():
     df_aggregated = base_aggregation._execute_base_aggregation({base_aggregation.stations: df_stations, base_aggregation.timeseriesdata: df_timeseriesdata})
     df_most_polluted = spark_aggregate.pollution_per_city_and_category(df_aggregated)
 

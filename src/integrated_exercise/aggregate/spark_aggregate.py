@@ -6,6 +6,7 @@ import argparse
 import sys
 
 import src.integrated_exercise.aggregate.base_aggregation as base_aggregation
+import src.integrated_exercise.aggregate.aggregate_writer as aggregate_writer
 
 stations = 'stations'
 timeseriesdata = 'timeseriesdata'
@@ -39,11 +40,6 @@ def stations_per_city(dataframe: DataFrame) -> DataFrame:
             .agg(psf.count("station_id").alias("number_of_stations"))
             .sort(psf.col("number_of_stations"), ascending=False))
 
-
-def __write(dataframe: DataFrame, bucket_path: str, date: str, key: str):
-    dataframe.write.parquet(f"{bucket_path}/derived/{date}/{key}/", mode="overwrite")
-
-
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     logging.info("Entering aggregate main")
@@ -56,13 +52,14 @@ def main():
     )
     args = parser.parse_args()
     logging.info(f"Using args: {args}")
+
     df_base_aggregation = base_aggregation.execute(spark, args.bucket_path, args.date)
 
     df_pollution_per_city_and_category = pollution_per_city_and_category(df_base_aggregation)
-    __write(df_pollution_per_city_and_category, args.bucket_path, args.date, "pollution_per_city_and_category")
+    aggregate_writer.write_dataframe(df_pollution_per_city_and_category, args.bucket_path, args.date, "pollution_per_city_and_category")
 
     df_stations_per_city = stations_per_city(df_base_aggregation)
-    __write(df_stations_per_city, args.bucket_path, args.date, "stations_per_city")
+    aggregate_writer.write_dataframe(df_stations_per_city, args.bucket_path, args.date, "stations_per_city")
 
 
 if __name__ == "__main__":
