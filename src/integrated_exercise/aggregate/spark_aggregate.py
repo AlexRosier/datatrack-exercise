@@ -14,7 +14,9 @@ spark = SparkSession.builder.config(
     "spark.jars.packages",
     ",".join(
         [
-            "org.apache.hadoop:hadoop-aws:3.3.1",
+            "org.apache.hadoop:hadoop-aws:3.3.1"
+            # "net.snowflake:spark-snowflake_2.13.0-spark_3.4",
+            # "net.snowflake:snowflake-jdbc:3.14.4"
         ]
     ),
 ).config(
@@ -30,8 +32,17 @@ def most_polluted_pm10(dataframe: DataFrame) -> DataFrame:
             .sort(psf.col("city_average_value"), ascending=False))
 
 
-def __write(dataframe: DataFrame, bucket_path: str, date: str):
-    dataframe.write.parquet(f"{bucket_path}/derived/{date}/most_polluted_pm10/", mode="overwrite")
+def stations_per_city(dataframe: DataFrame) -> DataFrame:
+
+    dataframe_deduplicated = dataframe.dropDuplicates(["station_id"])
+    return (dataframe_deduplicated
+            .groupBy(psf.col('station_county'), psf.col('station_city'), psf.col('station_state'), psf.col("ds"))
+            .agg(psf.count("station_id").alias("number_of_stations"))
+            .sort(psf.col("number_of_stations"), ascending=False))
+
+
+def __write(dataframe: DataFrame, bucket_path: str, date: str, key: str):
+    dataframe.write.parquet(f"{bucket_path}/derived/{date}/{key}/", mode="overwrite")
 
 
 def main():
@@ -47,8 +58,12 @@ def main():
     args = parser.parse_args()
     logging.info(f"Using args: {args}")
     df_base_aggregation = base_aggregation.execute(spark, args.bucket_path, args.date)
+
     df_most_polluted_pm10 = most_polluted_pm10(df_base_aggregation)
-    __write(df_most_polluted_pm10, args.bucket_path, args.date)
+    __write(df_most_polluted_pm10, args.bucket_path, args.date, "most_polluted_pm10")
+
+    df_stations_per_city = stations_per_city(df_base_aggregation)
+    __write(df_stations_per_city, args.bucket_path, args.date, "stations_per_city")
 
 
 if __name__ == "__main__":
