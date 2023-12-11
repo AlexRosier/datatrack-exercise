@@ -58,7 +58,7 @@ def test_transform():
              "6152 - DAILY CORRECTION TEOM - procedure", "1030", "40AL01 - Linkeroever", "6152",
              "6152 - DAILY CORRECTION TEOM - procedure", "5", "Particulate Matter < 10", "5",
              "Particulate Matter < 10", 4.385223684454717, 51.23619419990248, None, "Point", "Linkeroever", "2050", "Antwerp", "Antwerp", "Antwerp", "Flanders", "Belgium", date),
-            (1031, "40AL02 - Beveren", "Feature", 6153, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6153",
+            (1031, "40AL02 - Beveren (some further indication)", "Feature", 6153, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6153",
              "6153 - Unknown device - procedure", "1031", "40AL02 - Beveren", "6153",
              "6153 - Unknown device - procedure", "5", "Particulate Matter < 10", "5", "Particulate Matter < 10",
              4.234832753144059, 51.30452079034428, None, "Point", "Beveren", "9130", "Sint-Niklaas", None, "East Flanders", None, "Belgium", date)

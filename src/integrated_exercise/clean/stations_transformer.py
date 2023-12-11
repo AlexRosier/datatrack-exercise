@@ -38,7 +38,7 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
         "station_coordinates_lon": psf.col("geometry.coordinates").getItem(0),
         "station_coordinates_lat": psf.col("geometry.coordinates").getItem(1),
         "station_coordinates_z": psf.col("geometry.coordinates").getItem(2),
-        "station_native_city" : psf.split(psf.col("station_label"), " - ").getItem(1)
+        "station_native_city" : psf.split(psf.col("station_label"), r'\s-\s|\s\(').getItem(1)
     })
 
     df_dropped = (df_renamed
