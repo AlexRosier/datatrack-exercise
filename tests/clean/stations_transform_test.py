@@ -22,7 +22,7 @@ def test_transform():
         StructField("station_id", IntegerType()),
         StructField("station_label", StringType()),
         StructField("station_type", StringType()),
-        StructField("timeseries_id", StringType()),
+        StructField("timeseries_id", StringType(), False),
         StructField("station_services_id", StringType()),
         StructField("station_services_label", StringType()),
         StructField("station_offering_id", StringType()),
@@ -46,6 +46,8 @@ def test_transform():
         StructField("station_geopy_state", StringType()),
         StructField("station_geopy_region", StringType()),
         StructField("station_geopy_country", StringType()),
+        StructField("station_native_city_lon", FloatType()),
+        StructField("station_native_city_lat", FloatType()),
         StructField("ds", StringType(), False),
     ]
     df_expected = spark.createDataFrame(
@@ -53,15 +55,15 @@ def test_transform():
             (1030, "40AL01 - Linkeroever", "Feature", 6151, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6151",
              "6151 - Unknown device - procedure", "1030", "40AL01 - Linkeroever", "6151",
              "6151 - Unknown device - procedure", "391", "Black Carbon", "391", "Black Carbon",  4.385223684454717, 51.23619419990248,
-             None, "Point", "Linkeroever", "2050", "Antwerp", "Antwerp", "Antwerp", "Flanders", "Belgium", date),
+             None, "Point", "Linkeroever", "2050", "Antwerp", "Antwerp", "Antwerp", "Flanders", "Belgium", float(4.386194705963135), float(51.22365951538086), date),
             (1030, "40AL01 - Linkeroever", "Feature", 6152, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6152",
              "6152 - DAILY CORRECTION TEOM - procedure", "1030", "40AL01 - Linkeroever", "6152",
              "6152 - DAILY CORRECTION TEOM - procedure", "5", "Particulate Matter < 10", "5",
-             "Particulate Matter < 10", 4.385223684454717, 51.23619419990248, None, "Point", "Linkeroever", "2050", "Antwerp", "Antwerp", "Antwerp", "Flanders", "Belgium", date),
+             "Particulate Matter < 10", 4.385223684454717, 51.23619419990248, None, "Point", "Linkeroever", "2050", "Antwerp", "Antwerp", "Antwerp", "Flanders", "Belgium", float(4.386194705963135), float(51.22365951538086), date),
             (1031, "40AL02 - Beveren (some further indication)", "Feature", 6153, "1", "IRCEL - CELINE: timeseries-api (SOS 2.0)", "6153",
              "6153 - Unknown device - procedure", "1031", "40AL02 - Beveren", "6153",
              "6153 - Unknown device - procedure", "5", "Particulate Matter < 10", "5", "Particulate Matter < 10",
-             4.234832753144059, 51.30452079034428, None, "Point", "Beveren", "9130", "Sint-Niklaas", None, "East Flanders", None, "Belgium", date)
+             4.234832753144059, 51.30452079034428, None, "Point", "Beveren", "9130", "Sint-Niklaas", None, "East Flanders", None, "Belgium", float(4.257781028747559), float(51.21261215209961), date)
         ],
         schema=StructType(fields),
     )

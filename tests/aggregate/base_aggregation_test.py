@@ -40,6 +40,8 @@ def test_execute_base_aggregation():
         StructField("station_coordinates_type", StringType()),
         StructField("average_value", DoubleType()),
         StructField("station_native_city", StringType()),
+        StructField("station_native_city_lon", DoubleType()),
+        StructField("station_native_city_lat", DoubleType()),
         StructField("station_geopy_postal_code", StringType()),
         StructField("station_geopy_county", StringType()),
         StructField("station_geopy_city", StringType()),
