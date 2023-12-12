@@ -56,10 +56,10 @@ def main():
     df_base_aggregation = base_aggregation.execute(spark, args.bucket_path, args.date)
 
     df_pollution_per_city_and_category = pollution_per_city_and_category(df_base_aggregation)
-    aggregate_writer.write_dataframe(df_pollution_per_city_and_category, args.bucket_path, args.date, "pollution_per_city_and_category")
+    aggregate_writer.write_dataframe(df_pollution_per_city_and_category, spark, args.bucket_path, args.date, "pollution_per_city_and_category")
 
     df_stations_per_city = stations_per_city(df_base_aggregation)
-    aggregate_writer.write_dataframe(df_stations_per_city, args.bucket_path, args.date, "stations_per_city")
+    aggregate_writer.write_dataframe(df_stations_per_city, spark, args.bucket_path, args.date, "stations_per_city")
 
 
 if __name__ == "__main__":
