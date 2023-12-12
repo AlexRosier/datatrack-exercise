@@ -56,7 +56,7 @@ def transform(df_stations: DataFrame, date: str) -> DataFrame:
 
 def __enrich_with_coordinates(dataframe: DataFrame) -> DataFrame:
     udf_enrich_with_coordinates = __create_coordinates_enrich_udf()
-    return dataframe.withColumn("native_city", udf_enrich_with_coordinates(psf.col("station_native_city")))
+    return dataframe.withColumn("native_city", udf_enrich_with_coordinates(psf.col("station_native_city"), psf.col("station.station_geopy_country")))
 
 
 def __create_coordinates_enrich_udf() -> psf.udf:
@@ -68,9 +68,10 @@ def __create_coordinates_enrich_udf() -> psf.udf:
     return psf.udf(__get_coordinates, schema)
 
 
-def __get_coordinates(native_city: str) -> Row:
+def __get_coordinates(native_city: str, country: str) -> Row:
     try:
-        response = geolocator.geocode(native_city, language="en")
+        query = f"{native_city}, {country}"
+        response = geolocator.geocode(query, language="en")
         return Row('station_native_city_lon', 'station_native_city_lat')(
             response.longitude,
             response.latitude)

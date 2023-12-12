@@ -41,5 +41,5 @@ def execute(spark: SparkSession, bucket_path: str, date: str) -> DataFrame:
     dataframes = __read(spark, bucket_path, date)
     dataframes_transformed = __transform(dataframes)
     dataframe = __join(dataframes_transformed).cache()
-    aggregate_writer.write_dataframe(dataframe, bucket_path, date, "stations_average_value")
+    aggregate_writer.write_dataframe(dataframe, spark, bucket_path, date, "stations_average_value")
     return dataframe
